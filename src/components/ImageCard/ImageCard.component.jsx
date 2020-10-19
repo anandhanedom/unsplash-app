@@ -7,9 +7,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
+  // root: {
+  //   maxWidth: 345,
+  // },
   media: {
     minHeight: 200,
   },
@@ -21,11 +21,7 @@ const ImageCard = ({ imgSrc }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={imgSrc}
-          title="Contemplative Reptile"
-        />
+        <CardMedia className={classes.media} image={imgSrc} />
       </CardActionArea>
     </Card>
   );

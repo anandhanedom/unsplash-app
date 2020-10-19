@@ -12,7 +12,7 @@ class ImagePage extends Component {
   }
 
   fetchFromAPI = () => {
-    var url = 'https://picsum.photos/v2/list?page=2&limit=10';
+    var url = 'https://picsum.photos/v2/list?page=10&limit=10';
 
     fetch(url)
       .then((res) => res.json())
