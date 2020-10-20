@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //Components
 import Gallery from '../../Components/Gallery/Gallery.component';
+import Header from '../../Components/Header/Header.component';
 
 class ImagesPage extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class ImagesPage extends Component {
   render() {
     return (
       <div>
+        <Header />
         <Gallery images={this.state.images} />
       </div>
     );
