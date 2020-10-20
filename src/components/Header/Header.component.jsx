@@ -160,7 +160,7 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" >
+      <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton
             edge="end"
@@ -181,7 +181,10 @@ const Header = () => {
           >
             My Unsplash
           </Typography>
-          <div className={classes.search} style={{ borderRadius: '20px' }}>
+          <div
+            className={classes.search}
+            style={{ borderRadius: '20px', border: '1px solid #4f4f4f' }}
+          >
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -198,7 +201,7 @@ const Header = () => {
           <div>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               style={{
                 textTransform: 'initial',
                 borderRadius: '20px',

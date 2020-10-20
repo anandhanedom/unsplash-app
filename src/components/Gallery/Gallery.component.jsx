@@ -4,7 +4,6 @@ import React from 'react';
 import ImageCard from '../ImageCard/ImageCard.component';
 
 //Material UI
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
