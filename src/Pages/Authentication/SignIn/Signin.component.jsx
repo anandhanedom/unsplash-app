@@ -19,7 +19,11 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link
+        color="inherit"
+        href="https://material-ui.com/"
+        style={{ textDecoration: 'initial' }}
+      >
         Fake Splash
       </Link>{' '}
       {new Date().getFullYear()}
@@ -114,12 +118,20 @@ const SignInSide = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  style={{ textDecoration: 'initial' }}
+                >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link
+                  style={{ textDecoration: 'initial' }}
+                  to="/signup"
+                  variant="body2"
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
