@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 
 const Gallery = (props) => (
   <Container style={{ marginTop: '60px', maxWidth: '90vw' }}>
-    <Grid container spacing={3} justify="flex-start" alignItems="flex-start">
+    <Grid container spacing={6} justify="flex-start" alignItems="flex-start">
       {props.images.map((img) => (
         <Grid
           item

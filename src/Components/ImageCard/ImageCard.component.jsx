@@ -5,9 +5,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
+  // root: {
+  //   maxWidth: 382,
+  // },
   media: {
     minHeight: 180,
   },
