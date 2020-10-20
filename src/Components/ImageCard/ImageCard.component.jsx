@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    minHeight: 180,
   },
 });
 
@@ -17,7 +17,7 @@ const ImageCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{ borderRadius: '24px' }}>
       <CardActionArea>
         <CardMedia className={classes.media} image={props.imgSrc} />
       </CardActionArea>

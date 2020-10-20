@@ -5,7 +5,7 @@ const CustomButton = (props) => {
   let button;
 
   const styles = {
-    borderRadius: '20px',
+    borderRadius: '24px',
     textTransform: 'initial',
   };
 
