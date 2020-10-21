@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 //Components
 import Button from '../Button/Button.component';
+
+//Actions
+import { toggleModal } from '../../Redux/header/header.actions.js';
 
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -82,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -198,10 +202,12 @@ const Header = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              // onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Button secondary>Add a photo</Button>
+              <Button secondary click={props.toggleModal}>
+                Add a photo
+              </Button>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -210,10 +216,12 @@ const Header = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              // onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Button secondary>Add a photo</Button>
+              <Button secondary click={props.toggleModal}>
+                Add a photo
+              </Button>
             </IconButton>
           </div>
         </Toolbar>
@@ -224,4 +232,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

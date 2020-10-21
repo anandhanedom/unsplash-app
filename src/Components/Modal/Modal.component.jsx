@@ -1,4 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+//Selectors
+import { selectModalOpen } from '../../Redux/header/header.selectors.js';
+
+//Actions
+import { toggleModal } from '../../Redux/header/header.actions.js';
+
+//Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -18,46 +28,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TransitionsModal = () => {
+const TransitionsModal = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
-    <div>
-      <button type="button" onClick={handleOpen}>
-        react-transition-group
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">
-              react-transition-group animates me.
-            </p>
-          </div>
-        </Fade>
-      </Modal>
-    </div>
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      className={classes.modal}
+      open={props.isModalOpen}
+      onClose={props.toggleModal}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={props.isModalOpen}>
+        <div className={classes.paper}>
+          <h2 id="transition-modal-title">Transition modal</h2>
+          <p id="transition-modal-description">
+            react-transition-group animates me.
+          </p>
+        </div>
+      </Fade>
+    </Modal>
   );
 };
 
-export default TransitionsModal;
+const mapStateToProps = createStructuredSelector({
+  isModalOpen: selectModalOpen,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransitionsModal);
