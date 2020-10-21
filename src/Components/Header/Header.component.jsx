@@ -1,5 +1,8 @@
 import React from 'react';
 
+//Components
+import Button from '../Button/Button.component';
+
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +13,6 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -160,10 +162,10 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static">
         <Toolbar>
           <IconButton
-            edge="end"
+            edge="start"
             aria-label="account of current user"
             aria-controls={menuId}
             aria-haspopup="true"
@@ -173,18 +175,10 @@ const Header = () => {
             <AccountCircle />
           </IconButton>
 
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            style={{ marginLeft: '10px' }}
-          >
+          <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div
-            className={classes.search}
-            style={{ borderRadius: '20px', border: '1px solid #4f4f4f' }}
-          >
+          <div className={classes.search} style={{ borderRadius: '100px' }}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -198,18 +192,29 @@ const Header = () => {
             />
           </div>
           <div className={classes.grow} />
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{
-                textTransform: 'initial',
-                borderRadius: '20px',
-                minWidth: '113px',
-              }}
+          <div className={classes.sectionDesktop}>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
             >
-              Add a photo
-            </Button>
+              <Button secondary>Add a photo</Button>
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Button secondary>Add a photo</Button>
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
