@@ -12,6 +12,7 @@ import { setImages } from '../../Redux/images/images.actions.js';
 //Components
 import Gallery from '../../Components/Gallery/Gallery.component';
 import Header from '../../Components/Header/Header.component';
+import Modal from '../../Components/Modal/Modal.component';
 
 class ImagesPage extends Component {
   fetchImages = () => {
@@ -34,6 +35,7 @@ class ImagesPage extends Component {
       <div>
         <Header />
         <Gallery images={images} />
+        <Modal />
       </div>
     );
   }

@@ -11,19 +11,29 @@ const CustomButton = (props) => {
 
   if (props.primary) {
     button = (
-      <Button variant="contained" color="primary" style={styles}>
+      <Button
+        variant="contained"
+        color="primary"
+        style={styles}
+        onClick={props.click}
+      >
         {props.children}
       </Button>
     );
   } else if (props.secondary) {
     button = (
-      <Button variant="contained" color="secondary" style={styles}>
+      <Button
+        variant="contained"
+        color="secondary"
+        style={styles}
+        onClick={props.click}
+      >
         {props.children}
       </Button>
     );
   } else {
     button = (
-      <Button variant="contained" style={styles}>
+      <Button variant="contained" style={styles} onClick={props.click}>
         {props.children}
       </Button>
     );
