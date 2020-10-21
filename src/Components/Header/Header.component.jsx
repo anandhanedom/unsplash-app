@@ -182,7 +182,10 @@ const Header = (props) => {
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div className={classes.search} style={{ borderRadius: '100px' }}>
+          <div
+            className={classes.search}
+            style={{ borderRadius: '100px', maxWidth: '43vw' }}
+          >
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -202,7 +205,6 @@ const Header = (props) => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <Button secondary click={props.toggleModal}>
@@ -216,7 +218,6 @@ const Header = (props) => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <Button secondary click={props.toggleModal}>
