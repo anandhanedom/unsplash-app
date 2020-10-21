@@ -7,6 +7,9 @@ import ImageCard from '../ImageCard/ImageCard.component';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
+//CSS
+import styles from './Gallery.module.css';
+
 const Gallery = (props) => (
   <Container style={{ marginTop: '60px', maxWidth: '90vw' }}>
     <Grid container spacing={6} justify="flex-start" alignItems="flex-start">
