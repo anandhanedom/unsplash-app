@@ -1,1 +1,5 @@
- 
+   .container {
+       columns: 3 382px;
+       column-gap: 1.5rem;
+       text-align: center;
+   }
