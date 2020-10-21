@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+//Selectors
+import { selectImages } from '../../Redux/images/images.selectors.js';
+
+//Actions
+import { setImages } from '../../Redux/images/images.actions.js';
+
 //Components
 import Gallery from '../../Components/Gallery/Gallery.component';
 import Header from '../../Components/Header/Header.component';
 
 class ImagesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      images: [],
-    };
-  }
-
   fetchImages = () => {
+    const { setImages } = this.props;
+
     var url = 'http://localhost:3000/images';
 
     fetch(url)
       .then((res) => res.json())
-      .then((images) => this.setState({ images: images }));
+      .then((images) => setImages(images));
   };
 
   componentDidMount = () => {
@@ -25,13 +29,22 @@ class ImagesPage extends Component {
   };
 
   render() {
+    const { images } = this.props;
     return (
       <div>
         <Header />
-        <Gallery images={this.state.images} />
+        <Gallery images={images} />
       </div>
     );
   }
 }
 
-export default ImagesPage;
+const mapStateToProps = createStructuredSelector({
+  images: selectImages,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setImages: (images) => dispatch(setImages(images)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImagesPage);
