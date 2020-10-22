@@ -166,7 +166,7 @@ const Header = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <IconButton
             edge="start"
