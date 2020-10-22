@@ -6,3 +6,8 @@ export const selectModalOpen = createSelector(
   [selectHeader],
   (header) => header.modalOpen
 );
+
+export const selectSearchBoxValue = createSelector(
+  [selectHeader],
+  (header) => header.searchBoxValue
+);

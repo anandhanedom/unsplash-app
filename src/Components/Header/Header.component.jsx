@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
+import { handleSearchChange } from '../../Redux/header/header.actions.js';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -164,7 +164,7 @@ const Header = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" elevation={0} color={'transparent'}>
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -190,6 +190,7 @@ const Header = (props) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => props.handleSearchChange(e.target.value)}
             />
           </div>
           <div className={classes.grow} />
@@ -227,6 +228,7 @@ const Header = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
+  handleSearchChange: (value) => dispatch(handleSearchChange(value)),
 });
 
 export default connect(null, mapDispatchToProps)(Header);

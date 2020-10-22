@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   modalOpen: false,
+  searchBoxValue: '',
 };
 
 const headerReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +9,12 @@ const headerReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         modalOpen: !state.modalOpen,
+      };
+
+    case 'SEARCH_CHANGE':
+      return {
+        ...state,
+        searchBoxValue: action.payload,
       };
 
     default:
