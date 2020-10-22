@@ -164,7 +164,7 @@ const Header = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0} color={'transparent'}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -179,12 +179,12 @@ const Header = (props) => {
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div className={classes.search}>
+          <div className={classes.search} style={{ borderRadius: '24px' }}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search by name"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -194,39 +194,24 @@ const Header = (props) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ borderRadius: '24px' }}
               onClick={props.toggleModal}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                style={{ borderRadius: '100px' }}
-              >
-                Secondary
-              </Button>
-            </IconButton>
+              Secondary
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              color="inherit"
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ borderRadius: '24px' }}
               onClick={props.toggleModal}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                style={{ borderRadius: '100px' }}
-              >
-                Secondary
-              </Button>
-            </IconButton>
+              Secondary
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
