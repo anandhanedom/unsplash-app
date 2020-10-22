@@ -197,20 +197,24 @@ const Header = (props) => {
             <Button
               variant="contained"
               color="secondary"
-              style={{ borderRadius: '24px' }}
+              style={{ borderRadius: '24px', textTransform: 'initial' }}
               onClick={props.toggleModal}
             >
-              Secondary
+              + Add photo
             </Button>
           </div>
           <div className={classes.sectionMobile}>
             <Button
               variant="contained"
               color="secondary"
-              style={{ borderRadius: '24px' }}
+              style={{
+                borderRadius: '24px',
+                width: '130px',
+                textTransform: 'initial',
+              }}
               onClick={props.toggleModal}
             >
-              Secondary
+              + Add photo
             </Button>
           </div>
         </Toolbar>
