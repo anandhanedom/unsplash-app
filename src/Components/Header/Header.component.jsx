@@ -200,11 +200,12 @@ const Header = (props) => {
               aria-controls={menuId}
               aria-haspopup="true"
               color="inherit"
+              onClick={props.toggleModal}
             >
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={props.toggleModal}
+                // onClick={props.toggleModal}
               >
                 Secondary
               </Button>
@@ -216,11 +217,12 @@ const Header = (props) => {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               color="inherit"
+              onClick={props.toggleModal}
             >
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={props.toggleModal}
+                // onClick={props.toggleModal}
               >
                 Secondary
               </Button>
