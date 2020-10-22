@@ -1,13 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-//Components
-import Button from '../Button/Button.component';
+import { connect } from 'react-redux';
 
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
 
-//Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,6 +14,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -166,7 +164,7 @@ const Header = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             edge="start"
@@ -178,19 +176,15 @@ const Header = (props) => {
           >
             <AccountCircle />
           </IconButton>
-
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div
-            className={classes.search}
-            style={{ borderRadius: '100px', maxWidth: '43vw' }}
-          >
+          <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search by name"
+              placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -207,21 +201,28 @@ const Header = (props) => {
               aria-haspopup="true"
               color="inherit"
             >
-              <Button secondary click={props.toggleModal}>
-                Add a photo
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={props.toggleModal}
+              >
+                Secondary
               </Button>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
+              aria-label="show more"
+              aria-controls={mobileMenuId}
               aria-haspopup="true"
               color="inherit"
             >
-              <Button secondary click={props.toggleModal}>
-                Add a photo
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={props.toggleModal}
+              >
+                Secondary
               </Button>
             </IconButton>
           </div>
