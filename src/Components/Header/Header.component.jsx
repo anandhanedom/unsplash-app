@@ -205,7 +205,7 @@ const Header = (props) => {
               <Button
                 variant="contained"
                 color="secondary"
-                // onClick={props.toggleModal}
+                style={{ borderRadius: '100px' }}
               >
                 Secondary
               </Button>
@@ -222,7 +222,7 @@ const Header = (props) => {
               <Button
                 variant="contained"
                 color="secondary"
-                // onClick={props.toggleModal}
+                style={{ borderRadius: '100px' }}
               >
                 Secondary
               </Button>
