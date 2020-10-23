@@ -12,6 +12,9 @@ const ImageCard = (props) => {
       <div className={styles.cardDetails}>
         <div className={styles.deleteBtn}>Delete</div>
       </div>
+      <div className={styles.cardTitle}>
+        <p>{props.title}</p>
+      </div>
     </div>
   );
 };

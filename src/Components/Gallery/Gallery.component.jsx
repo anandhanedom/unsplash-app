@@ -13,7 +13,7 @@ const Gallery = (props) => (
   <Container style={{ marginTop: '60px', maxWidth: '90vw' }}>
     <div className={styles.container}>
       {props.images.map((img) => (
-        <ImageCard imgSrc={img.url} key={img.id} />
+        <ImageCard imgSrc={img.url} title={img.image_name} key={img.id} />
       ))}
     </div>
   </Container>
