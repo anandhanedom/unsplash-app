@@ -9,7 +9,7 @@ const ImageCard = (props) => {
       <div className={styles.cardOverlay}></div>
       <img className={styles.cardImg} src={props.imgSrc} alt="" />
 
-      <div className={styles.cardDetails}>
+      <div className={styles.cardDelete}>
         <div className={styles.deleteBtn}>Delete</div>
       </div>
       <div className={styles.cardTitle}>
