@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-//Components
-import Button from '../Button/Button.component';
+//Actions
+import { toggleModal } from '../../Redux/header/header.actions.js';
+import { handleSearchChange } from '../../Redux/header/header.actions.js';
 
-//Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,6 +14,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -82,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -162,7 +164,7 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -174,11 +176,10 @@ const Header = () => {
           >
             <AccountCircle />
           </IconButton>
-
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div className={classes.search} style={{ borderRadius: '100px' }}>
+          <div className={classes.search} style={{ borderRadius: '24px' }}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -189,32 +190,33 @@ const Header = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => props.handleSearchChange(e.target.value)}
             />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ borderRadius: '24px', textTransform: 'initial' }}
+              onClick={props.toggleModal}
             >
-              <Button secondary>Add a photo</Button>
-            </IconButton>
+              Add photo
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{
+                borderRadius: '24px',
+                width: '130px',
+                textTransform: 'initial',
+              }}
+              onClick={props.toggleModal}
             >
-              <Button secondary>Add a photo</Button>
-            </IconButton>
+              Add photo
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
@@ -224,4 +226,9 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+  handleSearchChange: (value) => dispatch(handleSearchChange(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

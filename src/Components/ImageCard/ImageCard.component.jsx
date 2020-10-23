@@ -6,7 +6,12 @@ import styles from './ImageCard.module.css';
 const ImageCard = (props) => {
   return (
     <div className={styles.card}>
-      <img className={styles.img} src={props.imgSrc} alt="" />
+      <div className={styles.cardOverlay}></div>
+      <img className={styles.cardImg} src={props.imgSrc} alt="" />
+
+      <div className={styles.cardDetails}>
+        <div className={styles.deleteBtn}>Delete</div>
+      </div>
     </div>
   );
 };
