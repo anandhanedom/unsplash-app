@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+//Components
+import ModalForm from '../ModalForm/ModalForm.component';
+
 //Selectors
 import { selectModalOpen } from '../../Redux/header/header.selectors.js';
 
@@ -47,10 +50,9 @@ const TransitionsModal = (props) => {
     >
       <Fade in={props.isModalOpen}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">Transition modal</h2>
-          <p id="transition-modal-description">
-            react-transition-group animates me.
-          </p>
+          <h2 id="transition-modal-title">Add a new photo</h2>
+          {/* <p id="transition-modal-description"></p> */}
+          <ModalForm />
         </div>
       </Fade>
     </Modal>

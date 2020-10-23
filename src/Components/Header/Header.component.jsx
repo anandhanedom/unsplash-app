@@ -201,7 +201,7 @@ const Header = (props) => {
               style={{ borderRadius: '24px', textTransform: 'initial' }}
               onClick={props.toggleModal}
             >
-              + Add photo
+              Add photo
             </Button>
           </div>
           <div className={classes.sectionMobile}>
@@ -215,7 +215,7 @@ const Header = (props) => {
               }}
               onClick={props.toggleModal}
             >
-              + Add photo
+              Add photo
             </Button>
           </div>
         </Toolbar>
