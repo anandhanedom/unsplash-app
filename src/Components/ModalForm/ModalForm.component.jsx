@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      width: '60vw',
+      width: '50vw',
     },
   },
 
@@ -37,6 +37,7 @@ const ModalForm = (props) => {
           label="Label"
           variant="outlined"
           color="primary"
+          fullWidth={true}
         />
       </div>
       <div style={{ marginTop: '30px' }}>
@@ -45,6 +46,7 @@ const ModalForm = (props) => {
           label="Photo URL"
           variant="outlined"
           color="primary"
+          fullWidth={true}
         />
       </div>
       <div className={classes.btnSpace}>
