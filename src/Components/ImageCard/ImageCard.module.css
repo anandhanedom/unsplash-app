@@ -1,27 +1,99 @@
-.card {
-    max-width: 382px;
-    margin: 0 1.5rem 1.5rem 0;
-    display: inline-block;
-    padding: 15px 5px;
-    transition: all 1s cubic-bezier(0.42, 0, 0.58, 1.0);
-    cursor: pointer;
-}
+  .card {
+      position: relative;
+      overflow: hidden;
+      max-width: 382px;
+      margin: auto;
+      display: inline-block;
+      transition: all 1s cubic-bezier(0.42, 0, 0.58, 1.0);
+      cursor: pointer;
+      margin-bottom: 40px;
+  }
+
+  .card .cardOverlay {
+      background: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      height: 99%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+      -webkit-transition: all 0.4s ease-in-out 0s;
+      -moz-transition: all 0.4s ease-in-out 0s;
+      transition: all 0.4s ease-in-out 0s;
+      border-radius: 24px;
+  }
+
+  .card:hover .cardOverlay {
+      opacity: 1;
+  }
+
+  .cardImg {
+      width: 100%;
+      max-height: 582px;
+      border-radius: 24px;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  .cardDetails {
+      position: absolute;
+      text-align: center;
+      padding-left: 1em;
+      padding-right: 1em;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      -moz-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+  }
+
+  .card:hover .cardDetails {
+      top: 40px;
+      left: 85%;
+      opacity: 1;
+  }
 
 
-.card:hover {
-    -webkit-transform: scale(1.05);
-    -ms-transform: scale(1.05);
-    transform: scale(1.05);
-}
 
-.img {
-    width: 100%;
-    transition: all .25s ease-in-out;
-    max-height: 582px;
-    border-radius: 24px;
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
+  .deleteBtn {
+      background: transparent;
+      border: 2px solid #EB5757;
+      color: #EB5757;
+      display: inline;
+      padding: 0.5rem 0.75rem;
+      border-radius: 24px;
+      font-weight: 600;
+      letter-spacing: 1px;
+  }
+
+  .deleteBtn:hover {
+      background: #EB5757;
+      color: #fff;
+  }
+
+  .cardDetails h3 {
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: 0.15em;   
+      margin-bottom: 0.5em;
+      text-transform: uppercase;
+  }
+
+  .cardDetails p {
+      color: #fff;
+      font-size: 0.8em;
+  }
+
+  .fadeIn-bottom {
+      top: 80%;
+  }
