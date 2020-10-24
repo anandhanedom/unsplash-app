@@ -40,14 +40,14 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   }
 
-  .cardDetails {
+  .cardDelete {
       position: absolute;
       text-align: center;
       padding-left: 1em;
       padding-right: 1em;
       width: 100%;
-      top: 50%;
-      left: 50%;
+      top: 47px;
+      left: 82%;
       opacity: 0;
       -webkit-transform: translate(-50%, -50%);
       -moz-transform: translate(-50%, -50%);
@@ -57,9 +57,30 @@
       transition: all 0.3s ease-in-out 0s;
   }
 
-  .card:hover .cardDetails {
-      top: 40px;
-      left: 85%;
+
+  .cardTitle {
+      position: absolute;
+      text-align: left;
+      width: 80%;
+      bottom: 19px;
+      left: 18%;
+      opacity: 0;
+      transform: translateX(-10%);
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      -moz-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+      color: wheat;
+      font-size: 18px;
+      font-weight: 500;
+  }
+
+
+
+  .card:hover .cardDelete {
+      opacity: 1;
+  }
+
+  .card:hover .cardTitle {
       opacity: 1;
   }
 
@@ -74,25 +95,14 @@
       border-radius: 24px;
       font-weight: 600;
       letter-spacing: 1px;
+      transition: all 0.3s ease-in-out;
   }
 
   .deleteBtn:hover {
       background: #EB5757;
       color: #fff;
   }
-
-  .cardDetails h3 {
-      color: #fff;
-      font-weight: 500;
-      letter-spacing: 0.15em;   
-      margin-bottom: 0.5em;
-      text-transform: uppercase;
-  }
-
-  .cardDetails p {
-      color: #fff;
-      font-size: 0.8em;
-  }
+ 
 
   .fadeIn-bottom {
       top: 80%;
