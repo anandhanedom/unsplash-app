@@ -7,6 +7,7 @@ import ModalForm from '../ModalForm/ModalForm.component';
 
 //Selectors
 import { selectModalOpen } from '../../Redux/header/header.selectors.js';
+import { selectModalType } from '../../Redux/header/header.selectors.js';
 
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
@@ -50,7 +51,8 @@ const TransitionsModal = (props) => {
     >
       <Fade in={props.isModalOpen}>
         <div className={classes.paper}>
-          <ModalForm isModalDelete={true} />
+          {console.log('Type', props.modalType)}
+          <ModalForm type={props.modalType} />
         </div>
       </Fade>
     </Modal>
@@ -59,6 +61,7 @@ const TransitionsModal = (props) => {
 
 const mapStateToProps = createStructuredSelector({
   isModalOpen: selectModalOpen,
+  modalType: selectModalType,
 });
 
 const mapDispatchToProps = (dispatch) => ({

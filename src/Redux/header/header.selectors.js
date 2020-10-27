@@ -11,3 +11,8 @@ export const selectSearchBoxValue = createSelector(
   [selectHeader],
   (header) => header.searchBoxValue
 );
+
+export const selectModalType = createSelector(
+  [selectHeader],
+  (header) => header.modalType
+);

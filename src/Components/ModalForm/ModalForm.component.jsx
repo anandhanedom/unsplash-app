@@ -30,7 +30,7 @@ const ModalForm = (props) => {
   const classes = useStyles();
   let form;
 
-  if (props.isModalDelete) {
+  if (props.type === 'delete') {
     form = (
       <div>
         <h2 id="transition-modal-title">Are you sure?</h2>
