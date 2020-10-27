@@ -20,7 +20,7 @@ const ImageCard = (props) => {
         <div
           className={styles.deleteBtn}
           onClick={() => {
-            props.changeModalType('delete');
+            props.changeModalType(false);
             props.toggleModal();
           }}
         >

@@ -210,7 +210,7 @@ const Header = (props) => {
               color="primary"
               style={{ borderRadius: '24px', textTransform: 'initial' }}
               onClick={() => {
-                props.changeModalType('add');
+                props.changeModalType(true);
                 props.toggleModal();
               }}
               size="large"
@@ -221,14 +221,14 @@ const Header = (props) => {
           <div className={classes.sectionMobile}>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               style={{
                 borderRadius: '24px',
                 width: '130px',
                 textTransform: 'initial',
               }}
               onClick={() => {
-                props.changeModalType('delete');
+                props.changeModalType(true);
                 props.toggleModal();
               }}
             >
