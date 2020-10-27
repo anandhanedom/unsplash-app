@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import styles from './ImageCard.module.css';
 
 //Actions
-import { toggleModal } from '../../Redux/header/header.actions.js';
-import { changeModalType } from '../../Redux/header/header.actions.js';
+import {
+  toggleModal,
+  changeModalType,
+} from '../../Redux/header/header.actions.js';
 
 const ImageCard = (props) => {
   return (
