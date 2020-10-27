@@ -183,9 +183,12 @@ const Header = (props) => {
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div className={classes.search} style={{ borderRadius: '24px' }}>
+          <div
+            className={classes.search}
+            style={{ borderRadius: '24px', border: '1px solid grey' }}
+          >
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon style={{ color: 'grey' }} />
             </div>
             <InputBase
               placeholder="Search by name"
@@ -201,9 +204,10 @@ const Header = (props) => {
           <div className={classes.sectionDesktop}>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               style={{ borderRadius: '24px', textTransform: 'initial' }}
               onClick={props.toggleModal}
+              size="large"
             >
               Add photo
             </Button>

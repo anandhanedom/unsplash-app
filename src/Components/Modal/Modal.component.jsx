@@ -51,7 +51,6 @@ const TransitionsModal = (props) => {
       <Fade in={props.isModalOpen}>
         <div className={classes.paper}>
           <h2 id="transition-modal-title">Add a new photo</h2>
-          {/* <p id="transition-modal-description"></p> */}
           <ModalForm />
         </div>
       </Fade>
