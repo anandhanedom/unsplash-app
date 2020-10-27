@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
 import { handleSearchChange } from '../../Redux/header/header.actions.js';
+import { changeModalType } from '../../Redux/header/header.actions.js';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -221,7 +222,10 @@ const Header = (props) => {
                 width: '130px',
                 textTransform: 'initial',
               }}
-              onClick={props.toggleModal}
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
@@ -237,6 +241,7 @@ const Header = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
+  changeModalType: (bool) => dispatch(changeModalType(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(Header);

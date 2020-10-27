@@ -6,6 +6,7 @@ import styles from './ImageCard.module.css';
 
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
+import { changeModalType } from '../../Redux/header/header.actions.js';
 
 const ImageCard = (props) => {
   return (
@@ -14,7 +15,13 @@ const ImageCard = (props) => {
       <img className={styles.cardImg} src={props.imgSrc} alt="" />
 
       <div className={styles.cardDelete}>
-        <div className={styles.deleteBtn} onClick={props.toggleModal}>
+        <div
+          className={styles.deleteBtn}
+          onClick={() => {
+            props.changeModalType(true);
+            props.toggleModal();
+          }}
+        >
           Delete
         </div>
       </div>
@@ -27,6 +34,7 @@ const ImageCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
+  changeModalType: (bool) => dispatch(changeModalType(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(ImageCard);
