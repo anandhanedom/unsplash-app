@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 //CSS
 import styles from './ImageCard.module.css';
+
+//Actions
+import { toggleModal } from '../../Redux/header/header.actions.js';
 
 const ImageCard = (props) => {
   return (
@@ -10,7 +14,9 @@ const ImageCard = (props) => {
       <img className={styles.cardImg} src={props.imgSrc} alt="" />
 
       <div className={styles.cardDelete}>
-        <div className={styles.deleteBtn}>Delete</div>
+        <div className={styles.deleteBtn} onClick={props.toggleModal}>
+          Delete
+        </div>
       </div>
       <div className={styles.cardTitle}>
         <p>{props.title}</p>
@@ -19,4 +25,8 @@ const ImageCard = (props) => {
   );
 };
 
-export default ImageCard;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+});
+
+export default connect(null, mapDispatchToProps)(ImageCard);
