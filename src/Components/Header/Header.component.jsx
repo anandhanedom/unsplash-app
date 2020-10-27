@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
 import { handleSearchChange } from '../../Redux/header/header.actions.js';
+import { changeModalType } from '../../Redux/header/header.actions.js';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -164,7 +165,11 @@ const Header = (props) => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" elevation={0}>
+      <AppBar
+        position="static"
+        elevation={0}
+        style={{ background: '#fff', color: '#000' }}
+      >
         <Toolbar>
           <IconButton
             edge="start"
@@ -179,9 +184,12 @@ const Header = (props) => {
           <Typography className={classes.title} variant="h6" noWrap>
             My Unsplash
           </Typography>
-          <div className={classes.search} style={{ borderRadius: '24px' }}>
+          <div
+            className={classes.search}
+            style={{ borderRadius: '24px', border: '1px solid grey' }}
+          >
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon style={{ color: 'grey' }} />
             </div>
             <InputBase
               placeholder="Search by name"
@@ -197,9 +205,10 @@ const Header = (props) => {
           <div className={classes.sectionDesktop}>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               style={{ borderRadius: '24px', textTransform: 'initial' }}
               onClick={props.toggleModal}
+              size="large"
             >
               Add photo
             </Button>
@@ -213,7 +222,10 @@ const Header = (props) => {
                 width: '130px',
                 textTransform: 'initial',
               }}
-              onClick={props.toggleModal}
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
@@ -229,6 +241,7 @@ const Header = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
+  changeModalType: (bool) => dispatch(changeModalType(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(Header);

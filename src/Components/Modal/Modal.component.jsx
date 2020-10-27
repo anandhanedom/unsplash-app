@@ -7,6 +7,7 @@ import ModalForm from '../ModalForm/ModalForm.component';
 
 //Selectors
 import { selectModalOpen } from '../../Redux/header/header.selectors.js';
+import { selectIsModalDelete } from '../../Redux/header/header.selectors.js';
 
 //Actions
 import { toggleModal } from '../../Redux/header/header.actions.js';
@@ -42,7 +43,7 @@ const TransitionsModal = (props) => {
       className={classes.modal}
       open={props.isModalOpen}
       onClose={props.toggleModal}
-      closeAfterTransition
+      closeAfterTransition 
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
@@ -50,9 +51,7 @@ const TransitionsModal = (props) => {
     >
       <Fade in={props.isModalOpen}>
         <div className={classes.paper}>
-          <h2 id="transition-modal-title">Add a new photo</h2>
-          {/* <p id="transition-modal-description"></p> */}
-          <ModalForm />
+          <ModalForm isModalDelete={props.isModalDelete} />
         </div>
       </Fade>
     </Modal>
@@ -61,6 +60,7 @@ const TransitionsModal = (props) => {
 
 const mapStateToProps = createStructuredSelector({
   isModalOpen: selectModalOpen,
+  isModalDelete: selectIsModalDelete,
 });
 
 const mapDispatchToProps = (dispatch) => ({

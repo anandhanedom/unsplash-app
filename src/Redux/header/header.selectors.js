@@ -11,3 +11,8 @@ export const selectSearchBoxValue = createSelector(
   [selectHeader],
   (header) => header.searchBoxValue
 );
+
+export const selectIsModalDelete = createSelector(
+  [selectHeader],
+  (header) => header.isModalDelete
+);

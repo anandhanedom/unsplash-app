@@ -28,45 +28,91 @@ const useStyles = makeStyles((theme) => ({
 
 const ModalForm = (props) => {
   const classes = useStyles();
+  let form;
+
+  if (props.isModalDelete) {
+    form = (
+      <div>
+        <h2 id="transition-modal-title">Are you sure?</h2>
+
+        <div>
+          <TextField
+            id="outlined-secondary"
+            label="Password"
+            variant="outlined"
+            color="primary"
+            fullWidth={true}
+          />
+        </div>
+
+        <div className={classes.btnSpace}>
+          <Button
+            variant="contained"
+            style={{ textTransform: 'none', borderRadius: '24px' }}
+            onClick={props.toggleModal}
+            size="large"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ textTransform: 'none', borderRadius: '24px' }}
+            size="large"
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
+    );
+  } else {
+    form = (
+      <div>
+        <h2 id="transition-modal-title">Add a new photo</h2>
+
+        <div>
+          <TextField
+            id="outlined-secondary"
+            label="Label"
+            variant="outlined"
+            color="primary"
+            fullWidth={true}
+          />
+        </div>
+        <div style={{ marginTop: '30px' }}>
+          <TextField
+            id="outlined-secondary"
+            label="Photo URL"
+            variant="outlined"
+            color="primary"
+            fullWidth={true}
+          />
+        </div>
+        <div className={classes.btnSpace}>
+          <Button
+            variant="contained"
+            style={{ textTransform: 'none', borderRadius: '24px' }}
+            onClick={props.toggleModal}
+            size="large"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ textTransform: 'none', borderRadius: '24px' }}
+            size="large"
+          >
+            Submit
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField
-          id="outlined-secondary"
-          label="Label"
-          variant="outlined"
-          color="primary"
-          fullWidth={true}
-        />
-      </div>
-      <div style={{ marginTop: '30px' }}>
-        <TextField
-          id="outlined-secondary"
-          label="Photo URL"
-          variant="outlined"
-          color="primary"
-          fullWidth={true}
-        />
-      </div>
-      <div className={classes.btnSpace}>
-        <Button
-          variant="contained"
-          style={{ textTransform: 'none', borderRadius: '24px' }}
-          onClick={props.toggleModal}
-          size="large"
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ textTransform: 'none', borderRadius: '24px' }}
-          size="large"
-        >
-          Submit
-        </Button>
-      </div>
+      {form}
     </form>
   );
 };
