@@ -6,16 +6,16 @@ const INITIAL_STATE = {
 
 const headerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'TOGGLE_MODAL':
-      return {
-        ...state,
-        modalOpen: !state.modalOpen,
-      };
-
     case 'SEARCH_CHANGE':
       return {
         ...state,
         searchBoxValue: action.payload,
+      };
+
+    case 'TOGGLE_MODAL':
+      return {
+        ...state,
+        modalOpen: !state.modalOpen,
       };
 
     case 'CHANGE_MODAL_TYPE':
