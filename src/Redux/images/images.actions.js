@@ -30,7 +30,7 @@ export const fetchImages = () => {
         const images = res.data;
         dispatch(fetchImagesSuccess(images));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(fetchImagesFailure('Oops! Something went wrong.'));
       });
   };
