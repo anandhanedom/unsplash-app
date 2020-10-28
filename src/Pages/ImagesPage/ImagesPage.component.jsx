@@ -18,6 +18,9 @@ import Gallery from '../../Components/Gallery/Gallery.component';
 import Header from '../../Components/Header/Header.component';
 import Modal from '../../Components/Modal/Modal.component';
 
+//Material UI
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class ImagesPage extends Component {
   componentDidMount() {
     const { fetchImages } = this.props;
@@ -33,7 +36,12 @@ class ImagesPage extends Component {
     return (
       <div>
         <Header />
-        <Gallery images={filteredImages} />
+        {this.props.loading ? (
+          <CircularProgress style={{ marginTop: '100px' }} disableShrink />
+        ) : (
+          <Gallery images={filteredImages} />
+        )}
+
         <Modal />
       </div>
     );
