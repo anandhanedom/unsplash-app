@@ -9,7 +9,7 @@ export const handleSearchChange = (value) => ({
   payload: value,
 });
 
-export const changeModalType = (bool) => ({
-  type: HeaderActionTypes.MODAL_TYPE_CHANGE,
-  payload: bool,
+export const changeModalType = (type) => ({
+  type: HeaderActionTypes.CHANGE_MODAL_TYPE,
+  payload: type,
 });

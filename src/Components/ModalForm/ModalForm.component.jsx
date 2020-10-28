@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ModalForm = (props) => {
   const classes = useStyles();
-  let form;
+  let modalForm;
 
-  if (props.isModalDelete) {
-    form = (
+  if (!props.type) {
+    modalForm = (
       <div>
         <h2 id="transition-modal-title">Are you sure?</h2>
 
@@ -39,6 +39,7 @@ const ModalForm = (props) => {
           <TextField
             id="outlined-secondary"
             label="Password"
+            type="password"
             variant="outlined"
             color="primary"
             fullWidth={true}
@@ -66,7 +67,7 @@ const ModalForm = (props) => {
       </div>
     );
   } else {
-    form = (
+    modalForm = (
       <div>
         <h2 id="transition-modal-title">Add a new photo</h2>
 
@@ -112,7 +113,7 @@ const ModalForm = (props) => {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      {form}
+      {modalForm}
     </form>
   );
 };

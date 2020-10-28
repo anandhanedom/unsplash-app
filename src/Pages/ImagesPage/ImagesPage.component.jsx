@@ -3,34 +3,32 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 //Selectors
-import { selectImages } from '../../Redux/images/images.selectors.js';
+import {
+  selectImages,
+  selectError,
+  selectLoading,
+} from '../../Redux/images/images.selectors.js';
 import { selectSearchBoxValue } from '../../Redux/header/header.selectors.js';
 
 //Actions
-import { setImages } from '../../Redux/images/images.actions.js';
+import { fetchImages } from '../../Redux/images/images.actions.js';
 
 //Components
 import Gallery from '../../Components/Gallery/Gallery.component';
 import Header from '../../Components/Header/Header.component';
 import Modal from '../../Components/Modal/Modal.component';
 
+//Material UI
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class ImagesPage extends Component {
-  fetchImages = () => {
-    const { setImages } = this.props;
-
-    var url = 'http://localhost:3000/images';
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((images) => setImages(images));
-  };
-
-  componentDidMount = () => {
-    this.fetchImages();
-  };
+  componentDidMount() {
+    const { fetchImages } = this.props;
+    fetchImages();
+  }
 
   render() {
-    const { images, searchValue } = this.props;
+    const { images, searchValue, loading, error } = this.props;
 
     const filteredImages = images.filter((img) =>
       img.image_name.toLowerCase().includes(searchValue.toLowerCase())
@@ -38,7 +36,12 @@ class ImagesPage extends Component {
     return (
       <div>
         <Header />
-        <Gallery images={filteredImages} />
+        {loading ? (
+          <CircularProgress style={{ marginTop: '100px' }} />
+        ) : (
+          <Gallery images={filteredImages} />
+        )}
+        {error ? <h3>{error}</h3> : null}
         <Modal />
       </div>
     );
@@ -48,10 +51,12 @@ class ImagesPage extends Component {
 const mapStateToProps = createStructuredSelector({
   images: selectImages,
   searchValue: selectSearchBoxValue,
+  loading: selectLoading,
+  error: selectError,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setImages: (images) => dispatch(setImages(images)),
+  fetchImages: () => dispatch(fetchImages()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImagesPage);
