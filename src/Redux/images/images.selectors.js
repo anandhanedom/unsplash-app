@@ -14,5 +14,5 @@ export const selectLoading = createSelector(
 
 export const selectError = createSelector(
   [selectImage],
-  (image) => image.error
+  (image) => image.fetchError
 );
