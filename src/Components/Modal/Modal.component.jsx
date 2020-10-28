@@ -51,7 +51,6 @@ const TransitionsModal = (props) => {
     >
       <Fade in={props.isModalOpen}>
         <div className={classes.paper}>
-          {console.log('Type', props.modalType)}
           <ModalForm type={props.modalType} />
         </div>
       </Fade>
