@@ -31,7 +31,7 @@ export const fetchImages = () => {
         dispatch(fetchImagesSuccess(images));
       })
       .catch((err) => {
-        dispatch(fetchImagesFailure(err.message));
+        dispatch(fetchImagesFailure('Oops! Something went wrong.'));
       });
   };
 };

@@ -28,7 +28,7 @@ class ImagesPage extends Component {
   }
 
   render() {
-    const { images, searchValue } = this.props;
+    const { images, searchValue, loading, error } = this.props;
 
     const filteredImages = images.filter((img) =>
       img.image_name.toLowerCase().includes(searchValue.toLowerCase())
@@ -36,12 +36,12 @@ class ImagesPage extends Component {
     return (
       <div>
         <Header />
-        {this.props.loading ? (
-          <CircularProgress style={{ marginTop: '100px' }} disableShrink />
+        {loading ? (
+          <CircularProgress style={{ marginTop: '100px' }} />
         ) : (
           <Gallery images={filteredImages} />
         )}
-
+        {error ? <h3>{error}</h3> : null}
         <Modal />
       </div>
     );
