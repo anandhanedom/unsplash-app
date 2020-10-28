@@ -1,6 +1,21 @@
 import { ImagesActionTypes } from './images.types';
 
-export const setImages = (images) => ({
-  type: ImagesActionTypes.SET_IMAGES,
-  payload: images,
-});
+const fetchImagesRequest = () => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_REQUEST,
+  };
+};
+
+const fetchImagesSuccess = (images) => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_SUCCESS,
+    payload: images,
+  };
+};
+
+const fetchImagesFailure = (error) => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_FAILURE,
+    payload: error,
+  };
+};
