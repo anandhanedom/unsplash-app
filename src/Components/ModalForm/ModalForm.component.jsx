@@ -32,81 +32,86 @@ const ModalForm = (props) => {
 
   if (!props.type) {
     form = (
-      <div>
-        <h2 id="transition-modal-title">Are you sure?</h2>
-
+      <form>
         <div>
-          <TextField
-            id="outlined-secondary"
-            label="Password"
-            variant="outlined"
-            color="primary"
-            fullWidth={true}
-          />
-        </div>
+          <h2 id="transition-modal-title">Are you sure?</h2>
 
-        <div className={classes.btnSpace}>
-          <Button
-            variant="contained"
-            style={{ textTransform: 'none', borderRadius: '24px' }}
-            onClick={props.toggleModal}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ textTransform: 'none', borderRadius: '24px' }}
-            size="large"
-          >
-            Delete
-          </Button>
+          <div>
+            <TextField
+              id="outlined-secondary"
+              label="Password"
+              type="password"
+              variant="outlined"
+              color="primary"
+              fullWidth={true}
+            />
+          </div>
+
+          <div className={classes.btnSpace}>
+            <Button
+              variant="contained"
+              style={{ textTransform: 'none', borderRadius: '24px' }}
+              onClick={props.toggleModal}
+              size="large"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ textTransform: 'none', borderRadius: '24px' }}
+              size="large"
+            >
+              Delete
+            </Button>
+          </div>
         </div>
-      </div>
+      </form>
     );
   } else {
     form = (
-      <div>
-        <h2 id="transition-modal-title">Add a new photo</h2>
-
+      <form>
         <div>
-          <TextField
-            id="outlined-secondary"
-            label="Label"
-            variant="outlined"
-            color="primary"
-            fullWidth={true}
-          />
+          <h2 id="transition-modal-title">Add a new photo</h2>
+
+          <div>
+            <TextField
+              id="outlined-secondary"
+              label="Label"
+              variant="outlined"
+              color="primary"
+              fullWidth={true}
+            />
+          </div>
+          <div style={{ marginTop: '30px' }}>
+            <TextField
+              id="outlined-secondary"
+              label="Photo URL"
+              variant="outlined"
+              color="primary"
+              fullWidth={true}
+            />
+          </div>
+          <div className={classes.btnSpace}>
+            <Button
+              variant="contained"
+              style={{ textTransform: 'none', borderRadius: '24px' }}
+              onClick={props.toggleModal}
+              size="large"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ textTransform: 'none', borderRadius: '24px' }}
+              size="large"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
-        <div style={{ marginTop: '30px' }}>
-          <TextField
-            id="outlined-secondary"
-            label="Photo URL"
-            variant="outlined"
-            color="primary"
-            fullWidth={true}
-          />
-        </div>
-        <div className={classes.btnSpace}>
-          <Button
-            variant="contained"
-            style={{ textTransform: 'none', borderRadius: '24px' }}
-            onClick={props.toggleModal}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ textTransform: 'none', borderRadius: '24px' }}
-            size="large"
-          >
-            Submit
-          </Button>
-        </div>
-      </div>
+      </form>
     );
   }
 
