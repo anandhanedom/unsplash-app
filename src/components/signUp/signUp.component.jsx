@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-//material UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -19,12 +17,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link
-        color="inherit"
-        href="https://material-ui.com/"
-        style={{ textDecoration: 'initial' }}
-      >
-        Fake Splash
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -51,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const SignUp = () => {
+
+const SignUp = (props) => {
   const classes = useStyles();
 
   return (
@@ -64,7 +59,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -130,13 +125,9 @@ const SignUp = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link
-                to="/"
-                variant="body2"
-                style={{ textDecoration: 'initial' }}
-              >
-                Already have an account? Sign in
-              </Link>
+              <div style={{ cursor: 'pointer' }} onClick={props.toggleSignIn}>
+                {'Already have an account? Sign In'}
+              </div>
             </Grid>
           </Grid>
         </form>
