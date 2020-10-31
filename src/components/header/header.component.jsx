@@ -184,7 +184,7 @@ const Header = (props) => {
           </IconButton>
           <Typography
             className={classes.title}
-            variant="h7"
+            variant="h6"
             noWrap
             style={{ fontWeight: 500 }}
           >
