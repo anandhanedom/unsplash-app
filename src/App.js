@@ -5,13 +5,15 @@ import './App.css';
 
 //Pages
 import AuthenticationPage from './pages/auth/auth.component.jsx';
+import ImagesPage from './pages/images/images.component.jsx';
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route exact path="/" component={AuthenticationPage}></Route>
-        <Route path="*" component={() => <h1>404 NOT FOUND</h1>} />
+        <Route exact path="/images" component={ImagesPage}></Route>
+        <Route path="*" component={() => <h1>404 Not Found !</h1>} />
       </Switch>
     </div>
   );
