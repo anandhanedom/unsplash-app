@@ -11,3 +11,8 @@ export const selectDeleteId = createSelector(
   [selectImage],
   (image) => image.deleteId
 );
+
+export const selectSearchValue = createSelector(
+  [selectImage],
+  (image) => image.searchValue
+);

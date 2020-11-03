@@ -29,6 +29,7 @@ const INITIAL_STATE = {
   ],
 
   deleteId: null,
+  searchValue: '',
 };
 
 const imagesReducer = (state = INITIAL_STATE, action) => {
@@ -48,6 +49,11 @@ const imagesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         images: state.images.filter((img) => img.id !== action.payload),
+      };
+    case ImagesActionTypes.SEARCH_CHANGE:
+      return {
+        ...state,
+        searchValue: action.payload,
       };
 
     default:

@@ -7,6 +7,8 @@ import {
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
 
+import { handleSearchChange } from '../../redux/images/images.actions';
+
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -212,6 +214,9 @@ const Header = (props) => {
               }}
               style={{ color: '#333' }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => {
+                props.handleSearchChange(e.target.value);
+              }}
             />
           </div>
           <div className={classes.grow} />
@@ -262,6 +267,7 @@ const Header = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
+  handleSearchChange: (value) => dispatch(handleSearchChange(value)),
 });
 
 export default connect(null, mapDispatchToProps)(Header);

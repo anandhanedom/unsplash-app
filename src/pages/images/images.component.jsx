@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 //Selectors
-import { selectImages } from '../../redux/images/images.selectors.js';
+import {
+  selectImages,
+  selectSearchValue,
+} from '../../redux/images/images.selectors.js';
 
 //Components
 import Header from '../../components/header/header.component';
@@ -14,10 +17,15 @@ class ImagesPage extends Component {
   render() {
     const { images } = this.props;
 
+    const filteredImages = images.filter((img) => {
+      const regex = new RegExp(`${this.props.searchValue}`, 'gi');
+      return img.image_name.match(regex);
+    });
+
     return (
       <div>
         <Header />
-        <Gallery images={images} />
+        <Gallery images={filteredImages} />
         <Modal />
       </div>
     );
@@ -26,6 +34,7 @@ class ImagesPage extends Component {
 
 const mapStateToProps = createStructuredSelector({
   images: selectImages,
+  searchValue: selectSearchValue,
 });
 
 // const mapDispatchToProps = (dispatch) => ({

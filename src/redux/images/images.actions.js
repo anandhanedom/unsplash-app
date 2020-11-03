@@ -26,7 +26,12 @@ export const setDeleteId = (id) => {
   };
 };
 
-//Set current image
-//Clear image
+export const handleSearchChange = (value) => {
+  return {
+    type: ImagesActionTypes.SEARCH_CHANGE,
+    payload: value,
+  };
+};
+
 //Filter images
 //Clear filter
