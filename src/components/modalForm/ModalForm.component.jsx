@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { createStructuredSelector } from 'reselect';
 
 //Actions
 import { toggleModal } from '../../Redux/modal/modal.actions.js';
-import { addImage, removeImage } from '../../Redux/images/images.actions.js';
-
-//Selectors
-import { selectCurrentImgId } from '../../Redux/images/images.selectors.js';
 
 //Material UI
 import { withStyles } from '@material-ui/styles';
@@ -136,20 +130,7 @@ class ModalForm extends Component {
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={() => {
-                axios
-                  .post('images', {
-                    image_name: this.state.label,
-                    url: this.state.url,
-                  })
-                  .then(() => {
-                    this.props.addImage({
-                      image_name: this.state.label,
-                      url: this.state.url,
-                    });
-                  })
-                  .then(() => this.props.toggleModal());
-              }}
+              onClick={this.props.toggleModal}
             >
               Submit
             </Button>
@@ -174,15 +155,9 @@ class ModalForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
-  addImage: (img) => dispatch(addImage(img)),
-  removeImage: (imgId) => dispatch(removeImage(imgId)),
-});
-
-const mapStateToProps = createStructuredSelector({
-  currentImgId: selectCurrentImgId,
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(withStyles(useStyles)(ModalForm));

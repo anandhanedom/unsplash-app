@@ -1,4 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+//Actions
+import {
+  changeModalType,
+  toggleModal,
+} from '../../redux/modal/modal.actions.js';
 
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -236,6 +243,10 @@ const Header = (props) => {
                 textTransform: 'initial',
                 background: '#3DB46D',
               }}
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
@@ -248,4 +259,9 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+  changeModalType: (type) => dispatch(changeModalType(type)),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

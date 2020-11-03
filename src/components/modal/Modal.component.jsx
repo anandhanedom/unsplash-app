@@ -9,7 +9,7 @@ import ModalForm from '../modalForm/ModalForm.component';
 import {
   selectModalType,
   selectModalOpen,
-} from '../../Redux/modal/modal.selectors.js';
+} from '../../redux/modal/modal.selectors.js';
 
 //Actions
 import { toggleModal } from '../../Redux/modal/modal.actions.js';
