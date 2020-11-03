@@ -8,6 +8,7 @@ import { selectImages } from '../../redux/images/images.selectors.js';
 //Components
 import Header from '../../components/header/header.component';
 import Gallery from '../../components/gallery/gallery.component';
+import Modal from '../../components/modal/Modal.component';
 
 class ImagesPage extends Component {
   render() {
@@ -17,6 +18,7 @@ class ImagesPage extends Component {
       <div>
         <Header />
         <Gallery images={images} />
+        <Modal />
       </div>
     );
   }

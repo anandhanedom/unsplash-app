@@ -12,7 +12,7 @@ import {
 } from '../../redux/modal/modal.selectors.js';
 
 //Actions
-import { toggleModal } from '../../Redux/modal/modal.actions.js';
+import { toggleModal } from '../../redux/modal/modal.actions.js';
 
 //Material UI
 import { makeStyles } from '@material-ui/core/styles';
