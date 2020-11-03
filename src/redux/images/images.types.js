@@ -1,4 +1,0 @@
-export const ImagesActionTypes = {
-  FETCH_IMG_REQUEST: 'FETCH_IMG_REQUEST',
-  FETCH_IMG_SUCCESS: 'FETCH_IMG_SUCCESS',
-};
