@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 //CSS
 import styles from './ImageCard.module.css';

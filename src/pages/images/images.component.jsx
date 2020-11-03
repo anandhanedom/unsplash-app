@@ -11,10 +11,12 @@ import Gallery from '../../components/gallery/gallery.component';
 
 class ImagesPage extends Component {
   render() {
+    const { images } = this.props;
+
     return (
       <div>
         <Header />
-        <Gallery />
+        <Gallery images={images} />
       </div>
     );
   }
