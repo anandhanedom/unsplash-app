@@ -4,10 +4,10 @@ const selectModal = (state) => state.modal;
 
 export const selectModalOpen = createSelector(
   [selectModal],
-  (header) => header.modalOpen
+  (modal) => modal.modalOpen
 );
 
 export const selectModalType = createSelector(
   [selectModal],
-  (header) => header.modalType
+  (modal) => modal.modalType
 );

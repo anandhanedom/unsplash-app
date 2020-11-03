@@ -2,7 +2,7 @@ import { ModalActionTypes } from './modal.types';
 
 const INITIAL_STATE = {
   modalOpen: false,
-  modalType: '',
+  modalType: false,
 
   label: '',
   password: '',

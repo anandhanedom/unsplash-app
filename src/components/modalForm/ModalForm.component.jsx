@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 //Actions
 import { toggleModal } from '../../redux/modal/modal.actions.js';
+
+//Selectors
+import { selectModalType } from '../../redux/modal/modal.selectors.js';
 
 //Material UI
 import { withStyles } from '@material-ui/styles';
@@ -53,7 +57,7 @@ class ModalForm extends Component {
   returnModalForm(type) {
     let modalForm;
 
-    if (!type) {
+    if (type) {
       modalForm = (
         <div>
           <h2 id="transition-modal-title">Are you sure?</h2>
@@ -157,7 +161,11 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
 });
 
+const mapStateToProps = createStructuredSelector({
+  type: selectModalType,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(useStyles)(ModalForm));
