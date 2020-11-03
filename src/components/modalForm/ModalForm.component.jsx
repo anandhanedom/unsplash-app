@@ -4,9 +4,11 @@ import { createStructuredSelector } from 'reselect';
 
 //Actions
 import { toggleModal } from '../../redux/modal/modal.actions.js';
+import { addImage, deleteImage } from '../../redux/images/images.actions.js';
 
 //Selectors
 import { selectModalType } from '../../redux/modal/modal.selectors.js';
+import { selectDeleteId } from '../../redux/images/images.selectors';
 
 //Material UI
 import { withStyles } from '@material-ui/styles';
@@ -88,7 +90,10 @@ class ModalForm extends Component {
               color="secondary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={() => {}}
+              onClick={() => {
+                this.props.deleteImage(this.props.deleteId);
+                this.props.toggleModal();
+              }}
             >
               Delete
             </Button>
@@ -134,7 +139,13 @@ class ModalForm extends Component {
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={this.props.toggleModal}
+              onClick={() => {
+                this.props.addImage({
+                  image_name: this.state.label,
+                  url: this.state.url,
+                });
+                this.props.toggleModal();
+              }}
             >
               Submit
             </Button>
@@ -159,10 +170,13 @@ class ModalForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
+  addImage: (img) => dispatch(addImage(img)),
+  deleteImage: (id) => dispatch(deleteImage(id)),
 });
 
 const mapStateToProps = createStructuredSelector({
   type: selectModalType,
+  deleteId: selectDeleteId,
 });
 
 export default connect(

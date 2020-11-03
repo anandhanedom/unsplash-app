@@ -6,3 +6,8 @@ export const selectImages = createSelector(
   [selectImage],
   (image) => image.images
 );
+
+export const selectDeleteId = createSelector(
+  [selectImage],
+  (image) => image.deleteId
+);

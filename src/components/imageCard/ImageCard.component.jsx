@@ -10,6 +10,8 @@ import {
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
 
+import { setDeleteId } from '../../redux/images/images.actions.js';
+
 const ImageCard = (props) => {
   return (
     <div className={styles.card}>
@@ -20,6 +22,7 @@ const ImageCard = (props) => {
         <div
           className={styles.deleteBtn}
           onClick={() => {
+            props.setDeleteId(props.id);
             props.changeModalType(true);
             props.toggleModal();
           }}
@@ -37,6 +40,7 @@ const ImageCard = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
+  setDeleteId: (id) => dispatch(setDeleteId(id)),
 });
 
 export default connect(null, mapDispatchToProps)(ImageCard);

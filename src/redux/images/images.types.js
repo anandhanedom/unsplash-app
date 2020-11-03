@@ -7,4 +7,5 @@ export const ImagesActionTypes = {
   CLEAR_FILTER: 'CLEAR_FILTER',
   SET_ALERT: 'SET_ALERT',
   REMOVE_ALERT: 'REMOVE_ALERT',
+  SET_DELETE_ID: 'SET_DELETE_ID',
 };

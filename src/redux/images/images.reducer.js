@@ -27,10 +27,29 @@ const INITIAL_STATE = {
       author: 'Brad',
     },
   ],
+
+  deleteId: null,
 };
 
 const imagesReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case ImagesActionTypes.SET_DELETE_ID:
+      return {
+        ...state,
+        deleteId: action.payload,
+      };
+
+    case ImagesActionTypes.ADD_IMAGE:
+      return {
+        ...state,
+        images: [...state.images, action.payload],
+      };
+    case ImagesActionTypes.DELETE_IMAGE:
+      return {
+        ...state,
+        images: state.images.filter((img) => img.id !== action.payload),
+      };
+
     default:
       return state;
   }
