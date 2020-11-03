@@ -218,6 +218,10 @@ const Header = (props) => {
                 background: '#3DB46D',
               }}
               size="large"
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
