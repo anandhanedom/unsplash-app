@@ -1,6 +1,7 @@
 import React from 'react';
 
 //Components
+import ImageCard from '../imageCard/ImageCard.component';
 
 //Material UI
 import Container from '@material-ui/core/Container';
