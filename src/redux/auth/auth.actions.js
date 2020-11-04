@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
+//Login success
 
-//Load user
-//Login user
+//Login fail
+
 //Logout
+
 //Clear errors
 
 //Register success
@@ -22,6 +24,34 @@ const registerFailure = (message) => {
   };
 };
 
+//Load success
+const loadUserSuccess = (data) => {
+  return {
+    type: AuthActionTypes.USER_LOADED,
+    payload: data,
+  };
+};
+
+//Load failure
+const authError = () => {
+  return {
+    type: AuthActionTypes.AUTH_ERROR,
+  };
+};
+
+//Load user
+export const loadUser = () => {
+  return async (dispatch) => {
+    //load token into global header
+    try {
+      const res = await axios.get('600/users/1');
+      dispatch(loadUserSuccess(res.data));
+    } catch (error) {
+      dispatch(authError());
+    }
+  };
+};
+
 //Register User
 export const register = (formData) => {
   const config = {
@@ -36,7 +66,7 @@ export const register = (formData) => {
 
       dispatch(registerSuccess(res.data));
     } catch (err) {
-      console.log(err.res);
+      console.log(err);
       dispatch(registerFailure(err.data));
     }
   };
