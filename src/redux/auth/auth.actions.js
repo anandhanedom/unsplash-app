@@ -9,19 +9,18 @@ const loginSuccess = (data) => {
   };
 };
 
-//Login fail
-const loginFailure = (message) => {
-  return {
-    type: AuthActionTypes.LOGIN_FAIL,
-    payload: message,
-  };
-};
-
 //Register success
 const registerSuccess = (data) => {
   return {
     type: AuthActionTypes.REGISTER_SUCCESS,
     payload: data,
+  };
+};
+
+//Login fail
+const loginFailure = () => {
+  return {
+    type: AuthActionTypes.LOGIN_FAIL,
   };
 };
 
@@ -101,7 +100,7 @@ export const login = (formData) => {
     const body = JSON.stringify(formData);
 
     try {
-      const res = await axios.post('signin', body, config);
+      const res = await axios.post('login', body, config);
 
       dispatch(loginSuccess(res.data));
     } catch (err) {

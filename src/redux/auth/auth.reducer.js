@@ -23,7 +23,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       localStorage.setItem('accessToken', action.payload.accessToken);
       return {
         ...state,
-        token: action.payload.accessToken,
+        accessToken: action.payload.accessToken,
         isAuthenticated: true,
         loading: false,
       };
@@ -35,7 +35,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       localStorage.removeItem('accessToken');
       return {
         ...state,
-        token: null,
+        accessToken: null,
         isAuthenticated: false,
         loading: false,
         user: null,
@@ -43,10 +43,10 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
     }
 
     case AuthActionTypes.LOGOUT: {
-      localStorage.removeItem('token');
+      localStorage.removeItem('accessToken');
       return {
         ...state,
-        token: null,
+        accessToken: null,
         isAuthenticated: false,
         loading: false,
         user: null,
