@@ -1,4 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+//Actions
+import { login } from '../../redux/auth/auth.actions.js';
 
 //Material UI
 import Avatar from '@material-ui/core/Avatar';
@@ -51,6 +56,13 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const classes = useStyles();
 
+  const onSubmit = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    await props.login({ email, password });
+    props.history.push('/');
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -94,6 +106,7 @@ const SignIn = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmit}
           >
             Sign In
           </Button>
@@ -118,4 +131,8 @@ const SignIn = (props) => {
   );
 };
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+  login: (formData) => dispatch(login(formData)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignIn));

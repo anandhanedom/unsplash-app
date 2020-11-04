@@ -1,8 +1,21 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
+
 //Login success
+const loginSuccess = (data) => {
+  return {
+    type: AuthActionTypes.LOGIN_SUCCESS,
+    payload: data,
+  };
+};
 
 //Login fail
+const loginFailure = (message) => {
+  return {
+    type: AuthActionTypes.LOGIN_FAIL,
+    payload: message,
+  };
+};
 
 //Logout
 
@@ -67,7 +80,27 @@ export const register = (formData) => {
       dispatch(registerSuccess(res.data));
     } catch (err) {
       console.log(err);
-      dispatch(registerFailure(err.data));
+      dispatch(registerFailure(err.response.data.msg));
+    }
+  };
+};
+
+//Login User
+export const login = (formData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  return async (dispatch) => {
+    try {
+      const res = await axios.post('signin', formData, config);
+
+      dispatch(loginSuccess(res.data));
+    } catch (err) {
+      console.log(err);
+      dispatch(loginFailure(err.response.data.msg));
     }
   };
 };

@@ -29,6 +29,16 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case AuthActionTypes.LOGIN_SUCCESS: {
+      localStorage.setItem('token', action.payload.accessToken);
+      return {
+        ...state,
+        token: action.payload.accessToken,
+        isAuthenticated: true,
+        loading: false,
+      };
+    }
+
     case AuthActionTypes.AUTH_ERROR: {
       localStorage.removeItem('token');
       return {
@@ -42,6 +52,18 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
     }
 
     case AuthActionTypes.REGISTER_FAIL: {
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        error: action.payload,
+      };
+    }
+
+    case AuthActionTypes.LOGIN_FAIL: {
       localStorage.removeItem('token');
       return {
         ...state,

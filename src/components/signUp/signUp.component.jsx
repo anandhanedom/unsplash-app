@@ -1,16 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
 
 //Components
 import Alerts from '../alerts/alerts.component';
 
 //Actions
 import { register } from '../../redux/auth/auth.actions';
-
-//Selectors
-import { selectIsAuthenticated } from '../../redux/auth/auth.selectors.js';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -61,6 +57,13 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = (props) => {
   const classes = useStyles();
+
+  const onSubmit = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    await props.register({ email, password });
+    props.history.push('/');
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,12 +137,7 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={async () => {
-              const email = document.getElementById('email').value;
-              const password = document.getElementById('password').value;
-              await props.register({ email, password });
-              props.history.push('/');
-            }}
+            onClick={onSubmit}
           >
             Sign Up
           </Button>
@@ -163,8 +161,4 @@ const mapDispatchToProps = (dispatch) => ({
   register: (formData) => dispatch(register(formData)),
 });
 
-const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectIsAuthenticated,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUp));
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));
