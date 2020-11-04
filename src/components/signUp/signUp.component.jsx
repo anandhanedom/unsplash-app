@@ -1,4 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+//Components
+import Alerts from '../alerts/alerts.component';
+
+//Actions
+import { register } from '../../redux/auth/auth.actions';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -49,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = (props) => {
   const classes = useStyles();
 
+  const onSubmit = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    await props.register({ email, password });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -60,6 +74,7 @@ const SignUp = (props) => {
           Sign up
         </Typography>
         <form className={classes.form}>
+          <Alerts />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -120,6 +135,7 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmit}
           >
             Sign Up
           </Button>
@@ -139,4 +155,8 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  register: (formData) => dispatch(register(formData)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

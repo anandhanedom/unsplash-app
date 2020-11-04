@@ -1,4 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+//Actions
+import {
+  changeModalType,
+  toggleModal,
+} from '../../redux/modal/modal.actions.js';
+import { logout } from '../../redux/auth/auth.actions.js';
+
+import { handleSearchChange } from '../../redux/images/images.actions';
 
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -115,6 +125,7 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={() => {
+          props.logout();
           handleMenuClose();
         }}
       >
@@ -184,7 +195,7 @@ const Header = (props) => {
           </IconButton>
           <Typography
             className={classes.title}
-            variant="h7"
+            variant="h6"
             noWrap
             style={{ fontWeight: 500 }}
           >
@@ -205,6 +216,9 @@ const Header = (props) => {
               }}
               style={{ color: '#333' }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => {
+                props.handleSearchChange(e.target.value);
+              }}
             />
           </div>
           <div className={classes.grow} />
@@ -218,6 +232,10 @@ const Header = (props) => {
                 background: '#3DB46D',
               }}
               size="large"
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
@@ -232,6 +250,10 @@ const Header = (props) => {
                 textTransform: 'initial',
                 background: '#3DB46D',
               }}
+              onClick={() => {
+                props.changeModalType(false);
+                props.toggleModal();
+              }}
             >
               Add photo
             </Button>
@@ -244,4 +266,11 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: () => dispatch(toggleModal()),
+  changeModalType: (type) => dispatch(changeModalType(type)),
+  handleSearchChange: (value) => dispatch(handleSearchChange(value)),
+  logout: () => dispatch(logout()),
+});
+
+export default connect(null, mapDispatchToProps)(Header);
