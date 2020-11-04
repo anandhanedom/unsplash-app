@@ -26,10 +26,9 @@ const registerSuccess = (data) => {
 };
 
 //Register fail
-const registerFailure = (message) => {
+const registerFailure = () => {
   return {
     type: AuthActionTypes.REGISTER_FAIL,
-    payload: message,
   };
 };
 
@@ -70,20 +69,22 @@ export const loadUser = () => {
 
 //Register User
 export const register = (formData) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   return async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify(formData);
+
     try {
-      const res = await axios.post('signup', formData, config);
+      const res = await axios.post('signup', body, config);
 
       dispatch(registerSuccess(res.data));
     } catch (err) {
       console.log(err);
-      dispatch(registerFailure(err.response.data.msg));
+      dispatch(registerFailure());
     }
   };
 };

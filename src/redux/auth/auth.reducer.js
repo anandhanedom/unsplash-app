@@ -1,10 +1,9 @@
 import { AuthActionTypes } from './auth.types';
 
 const INITIAL_STATE = {
-  token: localStorage.getItem('token'),
+  accessToken: localStorage.getItem('accessToken'),
   isAuthenticated: null,
   loading: true,
-  error: null,
   user: null,
 };
 
@@ -20,7 +19,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
     }
 
     case AuthActionTypes.REGISTER_SUCCESS: {
-      localStorage.setItem('token', action.payload.accessToken);
+      localStorage.setItem('accessToken', action.payload.accessToken);
       return {
         ...state,
         token: action.payload.accessToken,
@@ -43,7 +42,7 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       localStorage.removeItem('token');
       return {
         ...state,
-        token: null,
+        accessToken: null,
         isAuthenticated: false,
         loading: false,
         user: null,
@@ -52,14 +51,13 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
     }
 
     case AuthActionTypes.REGISTER_FAIL: {
-      localStorage.removeItem('token');
+      localStorage.removeItem('accessToken');
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         loading: false,
         user: null,
-        error: action.payload,
       };
     }
 
