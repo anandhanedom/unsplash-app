@@ -32,6 +32,3 @@ export const handleSearchChange = (value) => {
     payload: value,
   };
 };
-
-//Filter images
-//Clear filter
