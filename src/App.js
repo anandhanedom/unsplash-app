@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import PrivateRoute from './components/privateRoute/privateRoute.component.jsx';
 
 import './App.css';
 
@@ -34,7 +35,7 @@ function App(props) {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={ImagesPage} />
+          <PrivateRoute exact path="/" component={ImagesPage} />
           <Route
             exact
             path="/auth"

@@ -48,6 +48,13 @@ const authError = () => {
   };
 };
 
+//Logout
+export const logout = () => {
+  return {
+    type: AuthActionTypes.LOGOUT,
+  };
+};
+
 //Load user
 export const loadUser = () => {
   return async (dispatch) => {
@@ -92,8 +99,6 @@ export const login = (formData) => {
   return async (dispatch) => {
     try {
       const res = await axios.post('signin', formData, config);
-      console.log(res);
-
       dispatch(loginSuccess(res.data));
     } catch (err) {
       console.log(err);
