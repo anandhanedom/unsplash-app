@@ -1,4 +1,10 @@
 import React from 'react';
+
+//Components
+import Alerts from '../alerts/alerts.component';
+
+//Actions
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -60,6 +66,7 @@ const SignUp = (props) => {
           Sign up
         </Typography>
         <form className={classes.form}>
+          <Alerts />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
