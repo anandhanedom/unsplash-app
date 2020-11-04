@@ -57,10 +57,10 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = (props) => {
   const classes = useStyles();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    props.register({ email, password });
+    await props.register({ email, password });
   };
 
   return (

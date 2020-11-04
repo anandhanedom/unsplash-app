@@ -91,19 +91,22 @@ export const register = (formData) => {
 
 //Login User
 export const login = (formData) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
   return async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify(formData);
+
     try {
-      const res = await axios.post('signin', formData, config);
+      const res = await axios.post('signin', body, config);
+
       dispatch(loginSuccess(res.data));
     } catch (err) {
       console.log(err);
-      dispatch(loginFailure(err.response.data.msg));
+      dispatch(loginFailure());
     }
   };
 };
