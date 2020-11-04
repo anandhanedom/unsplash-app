@@ -10,12 +10,27 @@ const INITIAL_STATE = {
 
 const AuthReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // case AuthActionTypess.SEARCH_CHANGE:
-    //   return {
-    //     ...state,
-    //     searchValue: action.payload,
-    //   };
+    case AuthActionTypes.REGISTER_SUCCESS: {
+      localStorage.setItem('token', action.payload.accessToken);
+      return {
+        ...state,
+        token: action.payload.accessToken,
+        isAuthenticated: true,
+        loading: false,
+      };
+    }
 
+    case AuthActionTypes.REGISTER_FAIL: {
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        error: action.payload,
+      };
+    }
     default:
       return state;
   }

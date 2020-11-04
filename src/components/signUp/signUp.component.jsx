@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 //Components
 import Alerts from '../alerts/alerts.component';
 
 //Actions
+import { register } from '../../redux/auth/auth.actions';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -127,6 +130,12 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => {
+              const email = document.getElementById('email').value;
+              const password = document.getElementById('password').value;
+              props.register({ email, password });
+              props.history.push('/');
+            }}
           >
             Sign Up
           </Button>
@@ -146,4 +155,8 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => ({
+  register: (formData) => dispatch(register(formData)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));
