@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 //Components
 import Alerts from '../alerts/alerts.component';
@@ -58,11 +57,10 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = (props) => {
   const classes = useStyles();
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    await props.register({ email, password });
-    props.history.push('/');
+    props.register({ email, password });
   };
 
   return (
@@ -161,4 +159,4 @@ const mapDispatchToProps = (dispatch) => ({
   register: (formData) => dispatch(register(formData)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SignUp));
+export default connect(null, mapDispatchToProps)(SignUp);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 //Actions
 import { login } from '../../redux/auth/auth.actions.js';
@@ -56,11 +55,10 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const classes = useStyles();
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    await props.login({ email, password });
-    props.history.push('/');
+    props.login({ email, password });
   };
 
   return (
@@ -135,4 +133,4 @@ const mapDispatchToProps = (dispatch) => ({
   login: (formData) => dispatch(login(formData)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SignIn));
+export default connect(null, mapDispatchToProps)(SignIn);

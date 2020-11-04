@@ -17,10 +17,6 @@ const loginFailure = (message) => {
   };
 };
 
-//Logout
-
-//Clear errors
-
 //Register success
 const registerSuccess = (data) => {
   return {
@@ -96,6 +92,7 @@ export const login = (formData) => {
   return async (dispatch) => {
     try {
       const res = await axios.post('signin', formData, config);
+      console.log(res);
 
       dispatch(loginSuccess(res.data));
     } catch (err) {

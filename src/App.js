@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import './App.css';
 
@@ -7,11 +9,14 @@ import './App.css';
 import AuthenticationPage from './pages/auth/auth.component.jsx';
 import ImagesPage from './pages/images/images.component.jsx';
 
+//Selectors
+import { selectIsAuthenticated } from './redux/auth/auth.selectors';
+
 //Material UI
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-function App() {
+function App(props) {
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -29,8 +34,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={ImagesPage}></Route>
-          <Route exact path="/auth" component={AuthenticationPage}></Route>
+          <Route exact path="/" component={ImagesPage} />
+          <Route
+            exact
+            path="/auth"
+            render={() =>
+              props.isAuthenticated ? (
+                <Redirect to="/" />
+              ) : (
+                <AuthenticationPage />
+              )
+            }
+          />
           <Route path="*" component={() => <h1>404 Not Found !</h1>} />
         </Switch>
       </div>
@@ -38,6 +53,8 @@ function App() {
   );
 }
 
-// comment
+const mapStateToProps = createStructuredSelector({
+  isAuthenticated: selectIsAuthenticated,
+});
 
-export default App;
+export default connect(mapStateToProps, null)(App);
