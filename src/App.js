@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -20,8 +20,8 @@ import { loginWithRefreshToken } from './redux/auth/auth.actions';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-const App = (props) => {
-  const theme = createMuiTheme({
+class App extends Component {
+  theme = createMuiTheme({
     palette: {
       primary: {
         main: '#3DB46D',
@@ -34,7 +34,7 @@ const App = (props) => {
     },
   });
 
-  const shouldTokenRefresh = (token) => {
+  shouldTokenRefresh = (token) => {
     const parsedToken = JSON.parse(atob(token.split('.')[1]));
     // const username = parsedToken.username;
     const tokenExpiry = parsedToken.exp;
@@ -43,33 +43,34 @@ const App = (props) => {
     return tokenExpiry < currentTimeStamp ? true : false;
   };
 
-  const accessToken = localStorage.getItem('access_token');
-  const refreshToken = localStorage.getItem('refresh_token');
-
-  useEffect(() => {
-    if (shouldTokenRefresh(accessToken)) {
-      // props.loginWithRefreshToken(refreshToken);
+  componentDidMount() {
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (accessToken && this.shouldTokenRefresh(accessToken)) {
+      this.props.loginWithRefreshToken(refreshToken);
     }
-  });
+  }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Switch>
-          <PrivateRoute exact path="/" component={ImagesPage} />
-          <Route
-            exact
-            path="/auth"
-            render={() =>
-              accessToken ? <Redirect to="/" /> : <AuthenticationPage />
-            }
-          />
-          <Route path="*" component={() => <h1>404 Not Found !</h1>} />
-        </Switch>
-      </div>
-    </ThemeProvider>
-  );
-};
+  render() {
+    return (
+      <ThemeProvider theme={this.theme}>
+        <div className="App">
+          <Switch>
+            <PrivateRoute exact path="/" component={ImagesPage} />
+            <Route
+              exact
+              path="/auth"
+              render={() =>
+                this.accessToken ? <Redirect to="/" /> : <AuthenticationPage />
+              }
+            />
+            <Route path="*" component={() => <h1>404 Not Found !</h1>} />
+          </Switch>
+        </div>
+      </ThemeProvider>
+    );
+  }
+}
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser,
