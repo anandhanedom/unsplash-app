@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 //Selectors
-import { selectIsAuthenticated } from '../../redux/auth/auth.selectors.js';
+import { selectUser } from '../../redux/auth/auth.selectors.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = rest.isAuthenticated;
+  const accessToken = localStorage.getItem('access_token');
   return (
     <Route
       {...rest}
       render={(props) =>
-        !isAuthenticated ? <Redirect to="/auth" /> : <Component {...props} />
+        !accessToken ? <Redirect to="/auth" /> : <Component {...props} />
       }
     />
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectIsAuthenticated,
+  user: selectUser,
 });
 
 export default connect(mapStateToProps, null)(PrivateRoute);

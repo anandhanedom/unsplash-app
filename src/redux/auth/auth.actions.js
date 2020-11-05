@@ -1,111 +1,91 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
 
-//Login success
-const loginSuccess = (data) => {
-  return {
-    type: AuthActionTypes.LOGIN_SUCCESS,
-    payload: data,
-  };
+//Request header
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: localStorage.getItem('access_token'),
 };
 
-//Register success
-const registerSuccess = (data) => {
-  return {
-    type: AuthActionTypes.REGISTER_SUCCESS,
-    payload: data,
-  };
-};
+// User login
+const addUserDetailsToStore = (user) => ({
+  type: AuthActionTypes.ADD_USER,
+  payload: user,
+});
 
-//Login fail
-const loginFailure = () => {
-  return {
-    type: AuthActionTypes.LOGIN_FAIL,
-  };
-};
-
-//Register fail
-const registerFailure = () => {
-  return {
-    type: AuthActionTypes.REGISTER_FAIL,
-  };
-};
-
-//Load success
-const loadUserSuccess = (data) => {
-  return {
-    type: AuthActionTypes.USER_LOADED,
-    payload: data,
-  };
-};
-
-//Load failure
-const authError = () => {
-  return {
-    type: AuthActionTypes.AUTH_ERROR,
-  };
-};
-
-//Logout
-export const logout = () => {
-  return {
-    type: AuthActionTypes.LOGOUT,
-  };
-};
-
-//Load user
-export const loadUser = () => {
+// User sign Up async
+export const signUpWithCredentialAsync = (userName, password) => {
   return async (dispatch) => {
-    //load token into global header
-    try {
-      const res = await axios.get('600/users/1');
-      dispatch(loadUserSuccess(res.data));
-    } catch (error) {
-      dispatch(authError());
-    }
+    let response;
+
+    await axios
+      .get('signup')
+      .then((res) => {
+        response = res;
+      })
+      .catch((err) => alert('Error:', err));
+
+    localStorage.setItem('access_token', response.data.access_token);
+    localStorage.setItem('refresh_token', response.data.refresh_token);
+
+    dispatch(addUserDetailsToStore(userName));
   };
 };
 
-//Register User
-export const register = (formData) => {
+//User login async
+export const loginWithCredentialsAsync = (userName, password) => {
   return async (dispatch) => {
-    const config = {
+    let response;
+
+    await axios
+      .get('login', { email: userName, password: password })
+      .then((res) => {
+        response = res.data;
+      });
+
+    localStorage.setItem('access_token', response.access_token);
+    localStorage.setItem('refresh_token', response.refresh_token);
+
+    dispatch(addUserDetailsToStore(userName));
+  };
+};
+
+// User login with refresh token async
+export const loginWithRefreshToken = async (refresh_token) => {
+  let response;
+
+  await axios
+    .get('login', {
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: refresh_token,
       },
-    };
+    })
+    .then((res) => (response = res.data));
 
-    const body = JSON.stringify(formData);
-
-    try {
-      const res = await axios.post('signup', body, config);
-
-      dispatch(registerSuccess(res.data));
-    } catch (err) {
-      console.log(err);
-      dispatch(registerFailure());
-    }
-  };
+  localStorage.setItem('access_token', response.access_token);
+  localStorage.setItem('refresh_token', response.refresh_token);
 };
 
-//Login User
-export const login = (formData) => {
+// User logout
+export const removeUserFromStore = () => ({
+  type: AuthActionTypes.REMOVE_USER,
+});
+
+//User logout async
+export const logoutAsync = () => {
   return async (dispatch) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+    let response;
 
-    const body = JSON.stringify(formData);
+    await axios.get('logout', { headers: headers }).then((res) => {
+      response = res;
+    });
 
-    try {
-      const res = await axios.post('login', body, config);
-
-      dispatch(loginSuccess(res.data));
-    } catch (err) {
-      console.log(err);
-      dispatch(loginFailure());
+    if (response.status === 200 && response.data.Authorization === '') {
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token');
+      dispatch(removeUserFromStore());
+    } else {
+      alert('Something went wrong! Try again!');
     }
   };
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 //Actions
-import { login } from '../../redux/auth/auth.actions.js';
+import { loginWithCredentialsAsync } from '../../redux/auth/auth.actions.js';
 
 //Material UI
 import Avatar from '@material-ui/core/Avatar';
@@ -58,7 +58,7 @@ const SignIn = (props) => {
   const onSubmit = async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    await props.login({ email, password });
+    await props.loginWithCredentialsAsync(email, password);
   };
 
   return (
@@ -130,7 +130,8 @@ const SignIn = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (formData) => dispatch(login(formData)),
+  loginWithCredentialsAsync: (userName, password) =>
+    dispatch(loginWithCredentialsAsync(userName, password)),
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

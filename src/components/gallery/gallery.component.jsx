@@ -19,7 +19,7 @@ const Gallery = (props) => {
           <ImageCard
             key={img.id}
             imgSrc={img.url}
-            title={img.image_name}
+            title={img.title}
             id={img.id}
           />
         ))}

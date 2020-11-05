@@ -1,9 +1,14 @@
 import { ImagesActionTypes } from './images.types';
-import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
+//Request Headers
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: localStorage.getItem('access_token'),
+};
 
 //Add image
 export const addImage = (image) => {
-  image.id = uuidv4();
   return {
     type: ImagesActionTypes.ADD_IMAGE,
     payload: image,
@@ -30,5 +35,74 @@ export const handleSearchChange = (value) => {
   return {
     type: ImagesActionTypes.SEARCH_CHANGE,
     payload: value,
+  };
+};
+
+export const toggleLoading = () => {
+  return {
+    type: ImagesActionTypes.LOADING,
+  };
+};
+
+export const fetchImagesStart = () => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_START,
+  };
+};
+
+export const fetchImagesSuccess = (images) => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_SUCCESS,
+    payload: images,
+  };
+};
+
+export const fetchImagesFailure = (err) => {
+  return {
+    type: ImagesActionTypes.FETCH_IMAGES_FAILURE,
+    payload: err,
+  };
+};
+
+//Fetch images from db
+export const fetchImages = () => {
+  return async (dispatch) => {
+    dispatch(fetchImagesStart());
+    await axios
+      .get('images', { headers: headers })
+      .then((res) =>
+        setTimeout(() => {
+          dispatch(fetchImagesSuccess(res.data));
+        }, 1000)
+      )
+      .catch((err) => dispatch(fetchImagesFailure(err)));
+  };
+};
+
+//Add image to db
+export const addImageToDb = (title, url, userId) => {
+  return async (dispatch) => {
+    await axios
+      .post(
+        `images`,
+        {
+          userID: userId,
+          title: title,
+          url: url,
+        },
+        { headers: headers }
+      )
+      .then((res) => dispatch(addImage(res.data)));
+  };
+};
+
+//Delete image from db
+export const deleteImageFromDb = (id) => {
+  return async (dispatch) => {
+    await axios.delete(`/images/${id}`, { headers: headers }).then((res) => {
+      if (res.request.status === 200) {
+        dispatch(deleteImage(id));
+      }
+    });
   };
 };

@@ -6,7 +6,8 @@ import {
   changeModalType,
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
-import { logout } from '../../redux/auth/auth.actions.js';
+
+import { logoutAsync } from '../../redux/auth/auth.actions.js';
 
 import { handleSearchChange } from '../../redux/images/images.actions';
 
@@ -124,8 +125,8 @@ const Header = (props) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
-        onClick={() => {
-          props.logout();
+        onClick={async () => {
+          await props.logoutAsync();
           handleMenuClose();
         }}
       >
@@ -270,7 +271,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
-  logout: () => dispatch(logout()),
+  logoutAsync: () => dispatch(logoutAsync()),
 });
 
 export default connect(null, mapDispatchToProps)(Header);

@@ -11,7 +11,7 @@ import AuthenticationPage from './pages/auth/auth.component.jsx';
 import ImagesPage from './pages/images/images.component.jsx';
 
 //Selectors
-import { selectIsAuthenticated } from './redux/auth/auth.selectors';
+import { selectUser } from './redux/auth/auth.selectors';
 
 //Material UI
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -31,6 +31,8 @@ function App(props) {
     },
   });
 
+  const accessToken = localStorage.getItem('access_token');
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -40,11 +42,7 @@ function App(props) {
             exact
             path="/auth"
             render={() =>
-              props.isAuthenticated ? (
-                <Redirect to="/" />
-              ) : (
-                <AuthenticationPage />
-              )
+              accessToken ? <Redirect to="/" /> : <AuthenticationPage />
             }
           />
           <Route path="*" component={() => <h1>404 Not Found !</h1>} />
@@ -55,7 +53,7 @@ function App(props) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectIsAuthenticated,
+  user: selectUser,
 });
 
 export default connect(mapStateToProps, null)(App);
