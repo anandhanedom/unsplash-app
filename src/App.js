@@ -11,7 +11,7 @@ import AuthenticationPage from './pages/auth/auth.component.jsx';
 import ImagesPage from './pages/images/images.component.jsx';
 
 //Selectors
-import { selectIsAuthenticated } from './redux/auth/auth.selectors';
+import { selectUser } from './redux/auth/auth.selectors';
 
 //Material UI
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -55,7 +55,7 @@ function App(props) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectIsAuthenticated,
+  user: selectUser,
 });
 
 export default connect(mapStateToProps, null)(App);

@@ -1,85 +1,90 @@
-//toggleUsers helps to toggle login and signup page in a single route
-export const toggleUser = () => ({
-  type: imageCollectionActionTypes.TOGGLE_USER_TYPE
-});
+import axios from 'axios';
+import { AuthActionTypes } from './auth.types';
 
-export const toggleUserAsync = () => {
-  return dispatch => {
-    dispatch(toggleUser());
-  };
+//Request header
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: localStorage.getItem('access_token'),
 };
 
+// User login
+const addUserDetailsToStore = (user) => ({
+  type: AuthActionTypes.ADD_USER,
+  payload: user,
+});
 
-// User sign Up
-​export const signUpWithCredentialAsync = (userName, password) => {
-  return async dispatch => {
+// User sign Up async
+export const signUpWithCredentialAsync = (userName, password) => {
+  return async (dispatch) => {
     let response;
+
     await axios
-      .get("/signup")
-      .then(res => {
+      .get('/signup')
+      .then((res) => {
         response = res;
       })
-      .catch(err => alert("Error Hitting : ", err));
-    localStorage.setItem("access_token", response.data.access_token);
-    localStorage.setItem("refresh_token", response.data.refresh_token);
+      .catch((err) => alert('Error:', err));
+
+    localStorage.setItem('access_token', response.data.access_token);
+    localStorage.setItem('refresh_token', response.data.refresh_token);
+
     dispatch(addUserDetailsToStore(userName));
   };
 };
-​
-// User login
-export const addUserDetailsToStore = user => ({
-  type: imageCollectionActionTypes.ADD_USER,
-  payload: user
-});
-​
+
+//User login async
 export const loginWithCredentialsAsync = (userName, password) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let response;
-​
+
     await axios
-      .get("/login", { email: userName, password: password })
-      .then(res => {
+      .get('/login', { email: userName, password: password })
+      .then((res) => {
         response = res.data;
       });
-​
-    localStorage.setItem("access_token", response.access_token);
-    localStorage.setItem("refresh_token",response.refresh_token)
+
+    localStorage.setItem('access_token', response.access_token);
+    localStorage.setItem('refresh_token', response.refresh_token);
+
     dispatch(addUserDetailsToStore(userName));
   };
 };
-​
-// Login with refresh token
-export const loginWithRefreshToken = async refresh_token => {
+
+// User login with refresh token async
+export const loginWithRefreshToken = async (refresh_token) => {
   let response;
+
   await axios
-    .get("/login", {
+    .get('/login', {
       headers: {
-        Authorization: refresh_token
-      }
+        Authorization: refresh_token,
+      },
     })
-    .then(res => (response = res.data));
-​
-  localStorage.setItem("access_token", response.access_token);
-  localStorage.setItem("refresh_token",response.refresh_token)
+    .then((res) => (response = res.data));
+
+  localStorage.setItem('access_token', response.access_token);
+  localStorage.setItem('refresh_token', response.refresh_token);
 };
-​
-// user Logout
-​
+
+// User logout
 export const removeUserFromStore = () => ({
-  type: imageCollectionActionTypes.REMOVE_USER
+  type: AuthActionTypes.REMOVE_USER,
 });
-​
+
+//User logout async
 export const logoutAsync = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     let response;
-    await axios.get("/logout", { headers: headers }).then(res => {
+
+    await axios.get('/logout', { headers: headers }).then((res) => {
       response = res;
     });
-    if (response.status === 200 && response.data.Authorization === "") {
-      localStorage.removeItem("refresh_token");
-      localStorage.removeItem("access_token");
+
+    if (response.status === 200 && response.data.Authorization === '') {
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token');
     } else {
-      alert("Something went wrong... please try again");
+      alert('Something went wrong! Try again!');
     }
   };
 };

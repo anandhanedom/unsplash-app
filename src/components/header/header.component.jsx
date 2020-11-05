@@ -6,7 +6,6 @@ import {
   changeModalType,
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
-import { logout } from '../../redux/auth/auth.actions.js';
 
 import { handleSearchChange } from '../../redux/images/images.actions';
 
@@ -125,7 +124,7 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={() => {
-          props.logout();
+          // props.logout();
           handleMenuClose();
         }}
       >
@@ -270,7 +269,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
-  logout: () => dispatch(logout()),
+  // logout: () => dispatch(logout()),
 });
 
 export default connect(null, mapDispatchToProps)(Header);
