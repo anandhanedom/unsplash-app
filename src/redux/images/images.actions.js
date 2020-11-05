@@ -1,6 +1,5 @@
 import { ImagesActionTypes } from './images.types';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 //Request Headers
 const headers = {
@@ -90,7 +89,6 @@ export const addImageToDb = (title, url, userId) => {
           userID: userId,
           title: title,
           url: url,
-          id: uuidv4(),
         },
         { headers: headers }
       )
