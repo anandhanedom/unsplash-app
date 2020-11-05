@@ -10,7 +10,6 @@ const headers = {
 
 //Add image
 export const addImage = (image) => {
-  image.id = uuidv4();
   return {
     type: ImagesActionTypes.ADD_IMAGE,
     payload: image,
@@ -91,9 +90,21 @@ export const addImageToDb = (title, url, userId) => {
           userID: userId,
           title: title,
           url: url,
+          id: uuidv4(),
         },
         { headers: headers }
       )
       .then((res) => dispatch(addImage(res.data)));
+  };
+};
+
+//Delete image from db
+export const deleteImageFromDb = (id) => {
+  return async (dispatch) => {
+    await axios.delete(`/images/${id}`, { headers: headers }).then((res) => {
+      if (res.request.status === 200) {
+        dispatch(deleteImage(id));
+      }
+    });
   };
 };
