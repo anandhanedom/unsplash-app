@@ -19,7 +19,7 @@ export const signUpWithCredentialAsync = (userName, password) => {
     let response;
 
     await axios
-      .get('/signup')
+      .get('signup')
       .then((res) => {
         response = res;
       })
@@ -38,7 +38,7 @@ export const loginWithCredentialsAsync = (userName, password) => {
     let response;
 
     await axios
-      .get('/login', { email: userName, password: password })
+      .get('login', { email: userName, password: password })
       .then((res) => {
         response = res.data;
       });
@@ -55,7 +55,7 @@ export const loginWithRefreshToken = async (refresh_token) => {
   let response;
 
   await axios
-    .get('/login', {
+    .get('login', {
       headers: {
         Authorization: refresh_token,
       },
@@ -76,13 +76,14 @@ export const logoutAsync = () => {
   return async (dispatch) => {
     let response;
 
-    await axios.get('/logout', { headers: headers }).then((res) => {
+    await axios.get('logout', { headers: headers }).then((res) => {
       response = res;
     });
 
     if (response.status === 200 && response.data.Authorization === '') {
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('access_token');
+      dispatch(removeUserFromStore());
     } else {
       alert('Something went wrong! Try again!');
     }
