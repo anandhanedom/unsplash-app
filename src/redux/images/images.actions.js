@@ -80,3 +80,5 @@ export const fetchImages = () => {
       .catch((err) => dispatch(fetchImagesFailure(err)));
   };
 };
+
+//Add image to db
