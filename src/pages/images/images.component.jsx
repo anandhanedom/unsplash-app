@@ -20,6 +20,8 @@ import Modal from '../../components/modal/Modal.component';
 //Material UI
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+//Actions
+
 class ImagesPage extends Component {
   componentDidMount() {
     this.props.fetchImages();

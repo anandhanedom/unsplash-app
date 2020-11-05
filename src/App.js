@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,11 +13,14 @@ import ImagesPage from './pages/images/images.component.jsx';
 //Selectors
 import { selectUser } from './redux/auth/auth.selectors';
 
+//Actions
+import { loginWithRefreshToken } from './redux/auth/auth.actions';
+
 //Material UI
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-function App(props) {
+const App = (props) => {
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -31,7 +34,23 @@ function App(props) {
     },
   });
 
+  const shouldTokenRefresh = (token) => {
+    const parsedToken = JSON.parse(atob(token.split('.')[1]));
+    // const username = parsedToken.username;
+    const tokenExpiry = parsedToken.exp;
+    const currentTimeStamp = Math.floor(Date.now() / 1000);
+
+    return tokenExpiry < currentTimeStamp ? true : false;
+  };
+
   const accessToken = localStorage.getItem('access_token');
+  const refreshToken = localStorage.getItem('refresh_token');
+
+  useEffect(() => {
+    if (shouldTokenRefresh(accessToken)) {
+      // props.loginWithRefreshToken(refreshToken);
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,10 +69,15 @@ function App(props) {
       </div>
     </ThemeProvider>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser,
 });
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch) => ({
+  loginWithRefreshToken: (refresh_token) =>
+    dispatch(loginWithRefreshToken(refresh_token)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
