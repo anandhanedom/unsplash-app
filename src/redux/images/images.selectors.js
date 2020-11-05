@@ -16,3 +16,8 @@ export const selectSearchValue = createSelector(
   [selectImage],
   (image) => image.searchValue
 );
+
+export const selectLoading = createSelector(
+  [selectImage],
+  (image) => image.loading
+);

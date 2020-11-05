@@ -6,17 +6,28 @@ import { createStructuredSelector } from 'reselect';
 import {
   selectImages,
   selectSearchValue,
+  selectLoading,
 } from '../../redux/images/images.selectors.js';
+
+//Actions
+import { fetchImages } from '../../redux/images/images.actions.js';
 
 //Components
 import Header from '../../components/header/header.component';
 import Gallery from '../../components/gallery/gallery.component';
 import Modal from '../../components/modal/Modal.component';
 
+//Material UI
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 class ImagesPage extends Component {
+  componentDidMount() {
+    this.props.fetchImages();
+  }
+
   render() {
     console.log('images page');
-    const { images } = this.props;
+    const { images, isLoading } = this.props;
 
     const filteredImages = images.filter((img) => {
       const regex = new RegExp(`${this.props.searchValue}`, 'gi');
@@ -26,7 +37,11 @@ class ImagesPage extends Component {
     return (
       <div>
         <Header />
-        <Gallery images={filteredImages} />
+        {isLoading ? (
+          <CircularProgress style={{ marginTop: '100px' }} disableShrink />
+        ) : (
+          <Gallery images={filteredImages} />
+        )}
         <Modal />
       </div>
     );
@@ -36,10 +51,11 @@ class ImagesPage extends Component {
 const mapStateToProps = createStructuredSelector({
   images: selectImages,
   searchValue: selectSearchValue,
+  isLoading: selectLoading,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchImages: () => dispatch(fetchImages()),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  fetchImages: () => dispatch(fetchImages()),
+});
 
-export default connect(mapStateToProps, null)(ImagesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ImagesPage);
