@@ -4,7 +4,10 @@ import { createStructuredSelector } from 'reselect';
 
 //Actions
 import { toggleModal } from '../../redux/modal/modal.actions.js';
-import { addImage, deleteImage } from '../../redux/images/images.actions.js';
+import {
+  addImageToDb,
+  deleteImage,
+} from '../../redux/images/images.actions.js';
 
 //Selectors
 import { selectModalType } from '../../redux/modal/modal.selectors.js';
@@ -139,11 +142,12 @@ class ModalForm extends Component {
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={() => {
-                this.props.addImage({
-                  image_name: this.state.label,
-                  url: this.state.url,
-                });
+              onClick={async () => {
+                await this.props.addImageToDb(
+                  this.state.label,
+                  this.state.url,
+                  '5f991308d4adb48f8a1c9702' //userId
+                );
                 this.props.toggleModal();
               }}
             >
@@ -170,7 +174,8 @@ class ModalForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
-  addImage: (img) => dispatch(addImage(img)),
+  addImageToDb: (title, url, userId) =>
+    dispatch(addImageToDb(title, url, userId)),
   deleteImage: (id) => dispatch(deleteImage(id)),
 });
 
