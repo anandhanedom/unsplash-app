@@ -68,9 +68,9 @@ export const fetchImagesFailure = (err) => {
 
 //Fetch images from db
 export const fetchImages = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(fetchImagesStart());
-    axios
+    await axios
       .get('images', { headers: headers })
       .then((res) =>
         setTimeout(() => {
@@ -82,3 +82,18 @@ export const fetchImages = () => {
 };
 
 //Add image to db
+export const addImageToDb = (title, url, userId) => {
+  return async (dispatch) => {
+    await axios
+      .post(
+        `images`,
+        {
+          userID: userId,
+          title: title,
+          url: url,
+        },
+        { headers: headers }
+      )
+      .then((res) => dispatch(addImage(res.data)));
+  };
+};
