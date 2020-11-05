@@ -31,6 +31,8 @@ function App(props) {
     },
   });
 
+  const accessToken = localStorage.getItem('access_token');
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -40,7 +42,7 @@ function App(props) {
             exact
             path="/auth"
             render={() =>
-              props.user ? <Redirect to="/" /> : <AuthenticationPage />
+              accessToken ? <Redirect to="/" /> : <AuthenticationPage />
             }
           />
           <Route path="*" component={() => <h1>404 Not Found !</h1>} />

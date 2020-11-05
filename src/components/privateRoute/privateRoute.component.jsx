@@ -7,12 +7,12 @@ import { createStructuredSelector } from 'reselect';
 import { selectUser } from '../../redux/auth/auth.selectors.js';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = rest.user;
+  const accessToken = localStorage.getItem('access_token');
   return (
     <Route
       {...rest}
       render={(props) =>
-        !user ? <Redirect to="/auth" /> : <Component {...props} />
+        !accessToken ? <Redirect to="/auth" /> : <Component {...props} />
       }
     />
   );
