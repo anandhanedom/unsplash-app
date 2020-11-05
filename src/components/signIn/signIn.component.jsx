@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 //Actions
+import { loginWithCredentialsAsync } from '../../redux/auth/auth.actions.js';
 
 //Material UI
 import Avatar from '@material-ui/core/Avatar';
@@ -54,11 +55,11 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const classes = useStyles();
 
-  // const onSubmit = async () => {
-  //   const email = document.getElementById('email').value;
-  //   const password = document.getElementById('password').value;
-  //   await props.login({ email, password });
-  // };
+  const onSubmit = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    await props.loginWithCredentialsAsync(email, password);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -103,7 +104,7 @@ const SignIn = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            // onClick={onSubmit}
+            onClick={onSubmit}
           >
             Sign In
           </Button>
@@ -128,9 +129,9 @@ const SignIn = (props) => {
   );
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-//   login: (formData) => dispatch(login(formData)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  loginWithCredentialsAsync: (userName, password) =>
+    dispatch(loginWithCredentialsAsync(userName, password)),
+});
 
-// export default connect(null, mapDispatchToProps)(SignIn);
-export default SignIn;
+export default connect(null, mapDispatchToProps)(SignIn);

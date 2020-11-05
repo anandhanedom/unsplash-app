@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Alerts from '../alerts/alerts.component';
 
 //Actions
+import { signUpWithCredentialAsync } from '../../redux/auth/auth.actions.js';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -56,11 +57,11 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = (props) => {
   const classes = useStyles();
 
-  // const onSubmit = async () => {
-  //   const email = document.getElementById('email').value;
-  //   const password = document.getElementById('password').value;
-  //   await props.register({ email, password });
-  // };
+  const onSubmit = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    await props.signUpWithCredentialAsync(email, password);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,7 +135,7 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            // onClick={onSubmit}
+            onClick={onSubmit}
           >
             Sign Up
           </Button>
@@ -154,10 +155,9 @@ const SignUp = (props) => {
   );
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-//   register: (formData) => dispatch(register(formData)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  signUpWithCredentialAsync: (userName, password) =>
+    dispatch(signUpWithCredentialAsync(userName, password)),
+});
 
-// export default connect(null, mapDispatchToProps)(SignUp);
-
-export default SignUp;
+export default connect(null, mapDispatchToProps)(SignUp);
