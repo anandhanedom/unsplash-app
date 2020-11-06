@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 //Actions
 import { loginWithCredentialsAsync } from '../../redux/auth/auth.actions.js';
@@ -59,6 +60,7 @@ const SignIn = (props) => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     await props.loginWithCredentialsAsync(email, password);
+    props.history.push('/');
   };
 
   return (
@@ -134,4 +136,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loginWithCredentialsAsync(userName, password)),
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default withRouter(connect(null, mapDispatchToProps)(SignIn));

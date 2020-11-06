@@ -128,6 +128,7 @@ const Header = (props) => {
       <MenuItem
         onClick={async () => {
           await props.logoutAsync();
+          props.history.push('/auth');
           handleMenuClose();
         }}
       >
@@ -275,4 +276,4 @@ const mapDispatchToProps = (dispatch) => ({
   logoutAsync: () => dispatch(logoutAsync()),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Header));
+export default withRouter(connect(null, mapDispatchToProps)(Header));
