@@ -75,14 +75,19 @@ export const removeUserFromStore = () => ({
 export const logoutAsync = () => {
   return async (dispatch) => {
     let response;
-
+    console.log('logoust async ');
     await axios.get('logout', { headers: headers }).then((res) => {
       response = res;
     });
+    console.log('Response', response);
 
     if (response.status === 200 && response.data.Authorization === '') {
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('access_token');
+      console.log(
+        'Access token in thunk',
+        localStorage.getItem('access_token')
+      );
       dispatch(removeUserFromStore());
     } else {
       alert('Something went wrong! Try again!');

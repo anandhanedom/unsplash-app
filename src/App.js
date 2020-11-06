@@ -43,13 +43,16 @@ class App extends Component {
     return tokenExpiry < currentTimeStamp ? true : false;
   };
 
+  accessToken = localStorage.getItem('access_token');
+  refreshToken = localStorage.getItem('refresh_token');
+
   componentDidMount() {
-    const accessToken = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
-    if (accessToken && this.shouldTokenRefresh(accessToken)) {
-      this.props.loginWithRefreshToken(refreshToken);
+    if (this.accessToken && this.shouldTokenRefresh(this.accessToken)) {
+      loginWithRefreshToken(this.refreshToken); //add refresh condition
     }
   }
+
+  //no refresh --- login route
 
   render() {
     return (
@@ -60,9 +63,13 @@ class App extends Component {
             <Route
               exact
               path="/auth"
-              render={() =>
-                this.accessToken ? <Redirect to="/" /> : <AuthenticationPage />
-              }
+              render={() => {
+                return localStorage.getItem('access_token') ? (
+                  <Redirect to="/" />
+                ) : (
+                  <AuthenticationPage />
+                );
+              }}
             />
             <Route path="*" component={() => <h1>404 Not Found !</h1>} />
           </Switch>
@@ -76,9 +83,9 @@ const mapStateToProps = createStructuredSelector({
   user: selectUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loginWithRefreshToken: (refresh_token) =>
-    dispatch(loginWithRefreshToken(refresh_token)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   loginWithRefreshToken: (refresh_token) =>
+//     dispatch(loginWithRefreshToken(refresh_token)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

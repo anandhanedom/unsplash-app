@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Actions
@@ -126,7 +127,7 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={async () => {
-          await props.logoutAsync();
+          await props.logoutAsync1();
           handleMenuClose();
         }}
       >
@@ -271,7 +272,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
-  logoutAsync: () => dispatch(logoutAsync()),
+  logoutAsync1: () => dispatch(logoutAsync()),
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(withRouter(Header));
