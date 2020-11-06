@@ -17,6 +17,7 @@ import { selectDeleteId } from '../../redux/images/images.selectors';
 import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = (theme) => ({
   root: {
@@ -42,6 +43,7 @@ class ModalForm extends Component {
       label: '',
       password: '',
       url: '',
+      file: null,
     };
   }
 
@@ -57,6 +59,10 @@ class ModalForm extends Component {
 
   handlePasswordChange = (e) => {
     this.setState({ password: e.target.value });
+  };
+
+  handleSelectedFile = (e) => {
+    this.setState({ file: e.target.files[0] });
   };
 
   returnModalForm(type) {
@@ -110,7 +116,7 @@ class ModalForm extends Component {
 
           <div>
             <TextField
-              id="outlined-secondary"
+              // id="outlined-secondary"
               label="Label"
               variant="outlined"
               color="primary"
@@ -120,13 +126,34 @@ class ModalForm extends Component {
           </div>
           <div style={{ marginTop: '30px' }}>
             <TextField
-              id="outlined-secondary"
+              // id="outlined-secondary"
               label="Photo URL"
               variant="outlined"
               color="primary"
               fullWidth={true}
               onChange={this.handleUrlChange}
             />
+          </div>
+          <div
+            style={{
+              marginTop: '30px',
+            }}
+          >
+            <input
+              type="file"
+              onChange={this.handleSelectedFile}
+              style={{ display: 'none' }}
+              ref={(fileInput) => (this.fileInput = fileInput)}
+            />
+            <Button
+              variant="contained"
+              color={this.state.file ? 'primary' : ''}
+              style={{ textTransform: 'none', borderRadius: '24px' }}
+              size="small"
+              onClick={() => this.fileInput.click()}
+            >
+              {this.state.file ? 'File chosen \u2714' : 'Choose File'}
+            </Button>
           </div>
           <div className={this.props.classes.btnSpace}>
             <Button
