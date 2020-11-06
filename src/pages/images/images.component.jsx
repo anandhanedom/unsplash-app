@@ -20,13 +20,14 @@ import Modal from '../../components/modal/Modal.component';
 //Material UI
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+//Actions
+
 class ImagesPage extends Component {
   componentDidMount() {
     this.props.fetchImages();
   }
 
   render() {
-    console.log('images page');
     const { images, isLoading } = this.props;
 
     const filteredImages = images.filter((img) => {

@@ -75,7 +75,6 @@ export const removeUserFromStore = () => ({
 export const logoutAsync = () => {
   return async (dispatch) => {
     let response;
-
     await axios.get('logout', { headers: headers }).then((res) => {
       response = res;
     });
