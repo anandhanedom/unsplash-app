@@ -52,8 +52,6 @@ class App extends Component {
     }
   }
 
-  //no refresh --- login route
-
   render() {
     return (
       <ThemeProvider theme={this.theme}>

@@ -28,7 +28,6 @@ class ImagesPage extends Component {
   }
 
   render() {
-    console.log('images page');
     const { images, isLoading } = this.props;
 
     const filteredImages = images.filter((img) => {
