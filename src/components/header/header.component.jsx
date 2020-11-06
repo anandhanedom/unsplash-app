@@ -127,7 +127,7 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={async () => {
-          await props.logoutAsync1();
+          await props.logoutAsync();
           handleMenuClose();
         }}
       >
@@ -272,7 +272,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
-  logoutAsync1: () => dispatch(logoutAsync()),
+  logoutAsync: () => dispatch(logoutAsync()),
 });
 
 export default connect(null, mapDispatchToProps)(withRouter(Header));
