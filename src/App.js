@@ -43,12 +43,11 @@ class App extends Component {
     return tokenExpiry < currentTimeStamp ? true : false;
   };
 
-  accessToken = localStorage.getItem('access_token');
-  refreshToken = localStorage.getItem('refresh_token');
-
   componentDidMount() {
-    if (this.accessToken && this.shouldTokenRefresh(this.accessToken)) {
-      loginWithRefreshToken(this.refreshToken); //add refresh condition
+    const accessToken = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (accessToken && this.shouldTokenRefresh(accessToken)) {
+      loginWithRefreshToken(refreshToken); //add refresh condition
     }
   }
 
@@ -81,9 +80,9 @@ const mapStateToProps = createStructuredSelector({
   user: selectUser,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   loginWithRefreshToken: (refresh_token) =>
-//     dispatch(loginWithRefreshToken(refresh_token)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  loginWithRefreshToken: (refresh_token) =>
+    dispatch(loginWithRefreshToken(refresh_token)),
+});
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
