@@ -25,7 +25,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Fake Unsplash
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -97,10 +97,10 @@ const SignIn = (props) => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -113,12 +113,19 @@ const SignIn = (props) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                href="#"
+                variant="body2"
+                style={{ cursor: 'pointer', color: 'rgba(0, 0, 0, 0.54)' }}
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <div style={{ cursor: 'pointer' }} onClick={props.toggleSignIn}>
+              <div
+                style={{ cursor: 'pointer', color: 'rgba(0, 0, 0, 0.54)' }}
+                onClick={props.toggleSignIn}
+              >
                 {"Don't have an account? Sign Up"}
               </div>
             </Grid>

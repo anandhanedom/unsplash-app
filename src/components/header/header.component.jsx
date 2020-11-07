@@ -127,8 +127,8 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={async () => {
-          await props.logoutAsync();
           handleMenuClose();
+          await props.logoutAsync();
           props.history.push('/auth');
         }}
       >
