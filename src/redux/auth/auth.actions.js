@@ -8,7 +8,7 @@ const headers = {
 };
 
 // User login
-const addUserDetailsToStore = (user) => ({
+export const addUserDetailsToStore = (user) => ({
   type: AuthActionTypes.ADD_USER,
   payload: user,
 });

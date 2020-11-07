@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -8,7 +8,10 @@ import {
   changeModalType,
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
-import { logoutAsync } from '../../redux/auth/auth.actions.js';
+import {
+  logoutAsync,
+  addUserDetailsToStore,
+} from '../../redux/auth/auth.actions.js';
 import { handleSearchChange } from '../../redux/images/images.actions';
 
 //Selectors
@@ -180,6 +183,13 @@ const Header = (props) => {
     </Menu>
   );
 
+  useEffect(() => {
+    const access_token = localStorage.getItem('access_token');
+    const parsedToken = JSON.parse(atob(access_token.split('.')[1]));
+
+    props.addUserDetailsToStore(parsedToken.username);
+  });
+
   return (
     <div className={classes.grow}>
       <AppBar
@@ -276,6 +286,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
   logoutAsync: () => dispatch(logoutAsync()),
+  addUserDetailsToStore: (username) =>
+    dispatch(addUserDetailsToStore(username)),
 });
 
 const mapStateToProps = createStructuredSelector({
