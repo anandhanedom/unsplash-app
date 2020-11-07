@@ -28,7 +28,11 @@ export const signUpWithCredentialAsync = (userName, password) => {
     localStorage.setItem('access_token', response.data.access_token);
     localStorage.setItem('refresh_token', response.data.refresh_token);
 
-    dispatch(addUserDetailsToStore(userName));
+    const parsedToken = JSON.parse(
+      atob(response.data.access_token.split('.')[1])
+    );
+
+    dispatch(addUserDetailsToStore(parsedToken.username));
   };
 };
 
@@ -46,24 +50,32 @@ export const loginWithCredentialsAsync = (userName, password) => {
     localStorage.setItem('access_token', response.access_token);
     localStorage.setItem('refresh_token', response.refresh_token);
 
-    dispatch(addUserDetailsToStore(userName));
+    const parsedToken = JSON.parse(atob(response.access_token.split('.')[1]));
+
+    dispatch(addUserDetailsToStore(parsedToken.username));
   };
 };
 
 // User login with refresh token async
 export const loginWithRefreshToken = async (refresh_token) => {
-  let response;
+  return async (dispatch) => {
+    let response;
 
-  await axios
-    .get('login', {
-      headers: {
-        Authorization: refresh_token,
-      },
-    })
-    .then((res) => (response = res.data));
+    await axios
+      .get('login', {
+        headers: {
+          Authorization: refresh_token,
+        },
+      })
+      .then((res) => (response = res.data));
 
-  localStorage.setItem('access_token', response.access_token);
-  localStorage.setItem('refresh_token', response.refresh_token);
+    localStorage.setItem('access_token', response.access_token);
+    localStorage.setItem('refresh_token', response.refresh_token);
+
+    const parsedToken = JSON.parse(atob(response.access_token.split('.')[1]));
+
+    dispatch(addUserDetailsToStore(parsedToken.username));
+  };
 };
 
 // User logout
