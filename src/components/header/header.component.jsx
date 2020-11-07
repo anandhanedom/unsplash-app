@@ -1,16 +1,18 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 //Actions
 import {
   changeModalType,
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
-
 import { logoutAsync } from '../../redux/auth/auth.actions.js';
-
 import { handleSearchChange } from '../../redux/images/images.actions';
+
+//Selectors
+import { selectUser } from '../../redux/auth/auth.selectors';
 
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -202,7 +204,7 @@ const Header = (props) => {
             noWrap
             style={{ fontWeight: 500 }}
           >
-            John Doe
+            {props.user}
           </Typography>
           <div
             className={classes.search}
@@ -276,4 +278,8 @@ const mapDispatchToProps = (dispatch) => ({
   logoutAsync: () => dispatch(logoutAsync()),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Header));
+const mapStateToProps = createStructuredSelector({
+  user: selectUser,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
