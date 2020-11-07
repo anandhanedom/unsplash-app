@@ -10,8 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -25,7 +25,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Fake Unsplash
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -97,10 +97,10 @@ const SignIn = (props) => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -113,12 +113,19 @@ const SignIn = (props) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                href="#"
+                variant="body2"
+                style={{ cursor: 'pointer', color: 'rgba(0, 0, 0, 0.54)' }}
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <div style={{ cursor: 'pointer' }} onClick={props.toggleSignIn}>
+              <div
+                style={{ cursor: 'pointer', color: 'rgba(0, 0, 0, 0.54)' }}
+                onClick={props.toggleSignIn}
+              >
                 {"Don't have an account? Sign Up"}
               </div>
             </Grid>

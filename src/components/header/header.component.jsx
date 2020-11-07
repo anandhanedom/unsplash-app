@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 //Actions
 import {
   changeModalType,
   toggleModal,
 } from '../../redux/modal/modal.actions.js';
-
-import { logoutAsync } from '../../redux/auth/auth.actions.js';
-
+import {
+  logoutAsync,
+  addUserDetailsToStore,
+} from '../../redux/auth/auth.actions.js';
 import { handleSearchChange } from '../../redux/images/images.actions';
+
+//Selectors
+import { selectUser } from '../../redux/auth/auth.selectors';
 
 //Material UI
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -127,8 +132,8 @@ const Header = (props) => {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem
         onClick={async () => {
-          await props.logoutAsync();
           handleMenuClose();
+          await props.logoutAsync();
           props.history.push('/auth');
         }}
       >
@@ -178,6 +183,13 @@ const Header = (props) => {
     </Menu>
   );
 
+  useEffect(() => {
+    const access_token = localStorage.getItem('access_token');
+    const parsedToken = JSON.parse(atob(access_token.split('.')[1]));
+
+    props.addUserDetailsToStore(parsedToken.username);
+  });
+
   return (
     <div className={classes.grow}>
       <AppBar
@@ -202,7 +214,7 @@ const Header = (props) => {
             noWrap
             style={{ fontWeight: 500 }}
           >
-            John Doe
+            {props.user}
           </Typography>
           <div
             className={classes.search}
@@ -274,6 +286,12 @@ const mapDispatchToProps = (dispatch) => ({
   changeModalType: (type) => dispatch(changeModalType(type)),
   handleSearchChange: (value) => dispatch(handleSearchChange(value)),
   logoutAsync: () => dispatch(logoutAsync()),
+  addUserDetailsToStore: (username) =>
+    dispatch(addUserDetailsToStore(username)),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Header));
+const mapStateToProps = createStructuredSelector({
+  user: selectUser,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
