@@ -128,8 +128,8 @@ const Header = (props) => {
       <MenuItem
         onClick={async () => {
           await props.logoutAsync();
-          props.history.push('/auth');
           handleMenuClose();
+          props.history.push('/auth');
         }}
       >
         Logout
