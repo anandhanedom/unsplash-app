@@ -99,7 +99,7 @@ export const addImageToDb = (title, url, userId) => {
 //Delete image from db
 export const deleteImageFromDb = (id) => {
   return async (dispatch) => {
-    await axios.delete(`/images/${id}`, { headers: headers }).then((res) => {
+    await axios.delete(`images/${id}`, { headers: headers }).then((res) => {
       if (res.request.status === 200) {
         dispatch(deleteImage(id));
       }
