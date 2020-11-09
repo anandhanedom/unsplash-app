@@ -70,7 +70,7 @@ const SignIn = (props) => {
       await props.loginWithCredentialsAsync(email, password);
       props.history.push('/');
     } else {
-      props.addAlert('All fields must be entered', 'error', 3000);
+      props.addAlert('All the fields must be entered', 'error', 3000);
     }
   };
 
