@@ -2,8 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+//Components
+import Alerts from '../alerts/alerts.component';
+
 //Actions
 import { loginWithCredentialsAsync } from '../../redux/auth/auth.actions.js';
+import { addAlert } from '../../redux/alert/alert.actions.js';
 
 //Material UI
 import Avatar from '@material-ui/core/Avatar';
@@ -58,10 +62,16 @@ const SignIn = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    await props.loginWithCredentialsAsync(email, password);
-    props.history.push('/');
+
+    if (email && password) {
+      await props.loginWithCredentialsAsync(email, password);
+      props.history.push('/');
+    } else {
+      props.addAlert('All fields must be entered', 'error', 3000);
+    }
   };
 
   return (
@@ -71,9 +81,14 @@ const SignIn = (props) => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{ marginBottom: '30px' }}
+        >
           Sign in
         </Typography>
+        <Alerts />
         <form className={classes.form}>
           <TextField
             variant="outlined"
@@ -142,6 +157,8 @@ const SignIn = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   loginWithCredentialsAsync: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password)),
+
+  addAlert: (msg, type, timeeout) => dispatch(addAlert(msg, type, timeeout)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(SignIn));
