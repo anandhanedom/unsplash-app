@@ -1,6 +1,9 @@
 import { ImagesActionTypes } from './images.types';
 import axios from 'axios';
 
+//Actions
+import { addUserDetailsToStore } from '../auth/auth.actions';
+
 //Request Headers
 const headers = {
   'Content-Type': 'application/json',
@@ -97,12 +100,29 @@ export const addImageToDb = (title, url, userId) => {
 };
 
 //Delete image from db
-export const deleteImageFromDb = (id) => {
+export const deleteImageFromDb = (id, userName, password) => {
+  let response = null;
   return async (dispatch) => {
-    await axios.delete(`/images/${id}`, { headers: headers }).then((res) => {
-      if (res.request.status === 200) {
-        dispatch(deleteImage(id));
-      }
-    });
+    await axios
+      .get('login', { email: userName, password: password })
+      .then((res) => {
+        response = res.data;
+
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('refresh_token', response.refresh_token);
+
+        const parsedToken = JSON.parse(
+          atob(response.access_token.split('.')[1])
+        );
+
+        dispatch(addUserDetailsToStore(parsedToken.username));
+      })
+      .then(() => {
+        axios.delete(`images/${id}`, { headers: headers }).then((res) => {
+          if (res.request.status === 200) {
+            dispatch(deleteImage(id));
+          }
+        });
+      });
   };
 };

@@ -12,6 +12,7 @@ import {
 //Selectors
 import { selectModalType } from '../../redux/modal/modal.selectors.js';
 import { selectDeleteId } from '../../redux/images/images.selectors';
+import { selectUser } from '../../redux/auth/auth.selectors';
 
 //Material UI
 import { withStyles } from '@material-ui/styles';
@@ -100,7 +101,11 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={() => {
-                this.props.deleteImageFromDb(this.props.deleteId);
+                this.props.deleteImageFromDb(
+                  this.props.deleteId,
+                  this.props.userName,
+                  this.state.password
+                );
                 this.props.toggleModal();
               }}
             >
@@ -147,7 +152,7 @@ class ModalForm extends Component {
             />
             <Button
               variant="contained"
-              color={this.state.file ? 'primary' : ''}
+              color={this.state.file ? 'primary' : 'default'}
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="small"
               onClick={() => this.fileInput.click()}
@@ -203,12 +208,14 @@ const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
   addImageToDb: (title, url, userId) =>
     dispatch(addImageToDb(title, url, userId)),
-  deleteImageFromDb: (id) => dispatch(deleteImageFromDb(id)),
+  deleteImageFromDb: (id, userName, password) =>
+    dispatch(deleteImageFromDb(id, userName, password)),
 });
 
 const mapStateToProps = createStructuredSelector({
   type: selectModalType,
   deleteId: selectDeleteId,
+  userName: selectUser,
 });
 
 export default connect(
