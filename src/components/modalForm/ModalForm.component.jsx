@@ -113,7 +113,11 @@ class ModalForm extends Component {
                   );
                   this.props.toggleModal();
                 } else {
-                  this.props.addAlert('Please enter a password', 'error', 3000);
+                  this.props.addAlert(
+                    'Please enter your password',
+                    'error',
+                    3000
+                  );
                 }
               }}
             >
@@ -126,8 +130,9 @@ class ModalForm extends Component {
       modalForm = (
         <div>
           <h2 id="transition-modal-title">Add a new photo</h2>
+          <Alert />
 
-          <div>
+          <div style={{ marginTop: '30px' }}>
             <TextField
               // id="outlined-secondary"
               label="Label"
@@ -183,12 +188,20 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={async () => {
-                await this.props.addImageToDb(
-                  this.state.label,
-                  this.state.url,
-                  '5f991308d4adb48f8a1c9702' //userId
-                );
-                this.props.toggleModal();
+                if (this.state.label && this.state.url) {
+                  await this.props.addImageToDb(
+                    this.state.label,
+                    this.state.url,
+                    '5f991308d4adb48f8a1c9702' //userId
+                  );
+                  this.props.toggleModal();
+                } else {
+                  this.props.addAlert(
+                    'All fields must be entered',
+                    'error',
+                    3000
+                  );
+                }
               }}
             >
               Submit
