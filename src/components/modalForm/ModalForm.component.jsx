@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+//Components
+import Alert from '../alerts/alerts.component';
+
 //Actions
 import { toggleModal } from '../../redux/modal/modal.actions.js';
 import {
   addImageToDb,
   deleteImageFromDb,
 } from '../../redux/images/images.actions.js';
+import { addAlert } from '../../redux/alert/alert.actions.js';
 
 //Selectors
 import { selectModalType } from '../../redux/modal/modal.selectors.js';
@@ -73,8 +77,8 @@ class ModalForm extends Component {
       modalForm = (
         <div>
           <h2 id="transition-modal-title">Are you sure?</h2>
-
-          <div>
+          <Alert />
+          <div style={{ marginTop: '30px' }}>
             <TextField
               id="outlined-secondary"
               label="Password"
@@ -100,13 +104,21 @@ class ModalForm extends Component {
               color="secondary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={() => {
-                this.props.deleteImageFromDb(
-                  this.props.deleteId,
-                  this.props.userName,
-                  this.state.password
-                );
-                this.props.toggleModal();
+              onClick={async () => {
+                if (this.state.password) {
+                  await this.props.deleteImageFromDb(
+                    this.props.deleteId,
+                    this.props.userName,
+                    this.state.password
+                  );
+                  this.props.toggleModal();
+                } else {
+                  this.props.addAlert(
+                    'Please enter your password',
+                    'error',
+                    3000
+                  );
+                }
               }}
             >
               Delete
@@ -118,8 +130,9 @@ class ModalForm extends Component {
       modalForm = (
         <div>
           <h2 id="transition-modal-title">Add a new photo</h2>
+          <Alert />
 
-          <div>
+          <div style={{ marginTop: '30px' }}>
             <TextField
               // id="outlined-secondary"
               label="Label"
@@ -175,12 +188,20 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={async () => {
-                await this.props.addImageToDb(
-                  this.state.label,
-                  this.state.url,
-                  '5f991308d4adb48f8a1c9702' //userId
-                );
-                this.props.toggleModal();
+                if (this.state.label && this.state.url) {
+                  await this.props.addImageToDb(
+                    this.state.label,
+                    this.state.url,
+                    '5f991308d4adb48f8a1c9702' //userId
+                  );
+                  this.props.toggleModal();
+                } else {
+                  this.props.addAlert(
+                    'All the fields must be entered',
+                    'error',
+                    3000
+                  );
+                }
               }}
             >
               Submit
@@ -206,10 +227,14 @@ class ModalForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
+
   addImageToDb: (title, url, userId) =>
     dispatch(addImageToDb(title, url, userId)),
+
   deleteImageFromDb: (id, userName, password) =>
     dispatch(deleteImageFromDb(id, userName, password)),
+
+  addAlert: (msg, type, timeeout) => dispatch(addAlert(msg, type, timeeout)),
 });
 
 const mapStateToProps = createStructuredSelector({

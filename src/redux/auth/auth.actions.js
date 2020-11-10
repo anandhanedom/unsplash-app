@@ -67,7 +67,8 @@ export const loginWithRefreshToken = async (refresh_token) => {
           Authorization: refresh_token,
         },
       })
-      .then((res) => (response = res.data));
+      .then((res) => (response = res.data))
+      .then(() => console.log('Refresh token signin'));
 
     localStorage.setItem('access_token', response.access_token);
     localStorage.setItem('refresh_token', response.refresh_token);

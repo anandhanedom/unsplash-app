@@ -44,7 +44,7 @@ const SimpleAlerts = (props) => {
     <div className={classes.root}>
       {props.alerts.length > 0 &&
         props.alerts.map((alert) => (
-          <Alert variant="filled" severity={`${alert.type}`}>
+          <Alert key={alert.id} severity={`${alert.type}`}>
             {alert.msg}
           </Alert>
         ))}

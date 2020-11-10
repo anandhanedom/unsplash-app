@@ -6,6 +6,7 @@ import Alerts from '../alerts/alerts.component';
 
 //Actions
 import { signUpWithCredentialAsync } from '../../redux/auth/auth.actions.js';
+import { addAlert } from '../../redux/alert/alert.actions.js';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -59,9 +60,15 @@ const SignUp = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    await props.signUpWithCredentialAsync(email, password);
+
+    if (email && password) {
+      await props.signUpWithCredentialAsync(email, password);
+    } else {
+      props.addAlert('All the fields must be entered', 'error', 3000);
+    }
   };
 
   return (
@@ -71,13 +78,18 @@ const SignUp = (props) => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{ marginBottom: '30px' }}
+        >
           Sign up
         </Typography>
+        <Alerts />
+
         <form className={classes.form}>
-          <Alerts />
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -99,7 +111,7 @@ const SignUp = (props) => {
                 name="lastName"
                 autoComplete="lname"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -162,6 +174,8 @@ const SignUp = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   signUpWithCredentialAsync: (userName, password) =>
     dispatch(signUpWithCredentialAsync(userName, password)),
+
+  addAlert: (msg, type, timeout) => dispatch(addAlert(msg, type, timeout)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

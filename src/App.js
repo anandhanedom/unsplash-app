@@ -39,7 +39,7 @@ class App extends Component {
     // const username = parsedToken.username;
     const tokenExpiry = parsedToken.exp;
     const currentTimeStamp = Math.floor(Date.now() / 1000);
-
+    // console.log(tokenExpiry < currentTimeStamp);
     return tokenExpiry < currentTimeStamp ? true : false;
   };
 
@@ -47,6 +47,7 @@ class App extends Component {
     const accessToken = localStorage.getItem('access_token');
     const refreshToken = localStorage.getItem('refresh_token');
     if (accessToken && this.shouldTokenRefresh(accessToken)) {
+      // console.log('Logging with refresh token');
       loginWithRefreshToken(refreshToken); //add refresh condition
     }
   }
