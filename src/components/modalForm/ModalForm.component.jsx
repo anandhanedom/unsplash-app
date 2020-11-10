@@ -197,7 +197,7 @@ class ModalForm extends Component {
                   this.props.toggleModal();
                 } else {
                   this.props.addAlert(
-                    'All the fields must be entered',
+                    'Please fill all the fields',
                     'error',
                     3000
                   );
