@@ -11,7 +11,9 @@ import reportWebVitals from './reportWebVitals';
 
 import store from './redux/store';
 
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
+
+// console.log(process.env);
 
 ReactDOM.render(
   <Provider store={store}>
