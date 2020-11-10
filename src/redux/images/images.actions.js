@@ -1,4 +1,6 @@
 import { ImagesActionTypes } from './images.types';
+import { toggleModal } from '../modal/modal.actions';
+
 import axios from 'axios';
 
 //Actions
@@ -95,7 +97,10 @@ export const addImageToDb = (title, url, userId) => {
         },
         { headers: headers }
       )
-      .then((res) => dispatch(addImage(res.data)));
+      .then((res) => {
+        dispatch(addImage(res.data));
+        dispatch(toggleModal());
+      });
   };
 };
 
@@ -121,6 +126,7 @@ export const deleteImageFromDb = (id, userName, password) => {
         axios.delete(`images/${id}`, { headers: headers }).then((res) => {
           if (res.request.status === 200) {
             dispatch(deleteImage(id));
+            dispatch(toggleModal());
           }
         });
       });
