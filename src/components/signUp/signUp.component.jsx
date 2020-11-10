@@ -67,7 +67,7 @@ const SignUp = (props) => {
     if (email && password) {
       await props.signUpWithCredentialAsync(email, password);
     } else {
-      props.addAlert('All the fields must be entered', 'error', 3000);
+      props.addAlert('Please fill all the fields', 'error', 3000);
     }
   };
 
