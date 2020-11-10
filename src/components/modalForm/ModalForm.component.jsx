@@ -111,7 +111,6 @@ class ModalForm extends Component {
                     this.props.userName,
                     this.state.password
                   );
-                  this.props.toggleModal();
                 } else {
                   this.props.addAlert(
                     'Please enter your password',
@@ -194,7 +193,6 @@ class ModalForm extends Component {
                     this.state.url,
                     '5f991308d4adb48f8a1c9702' //userId
                   );
-                  this.props.toggleModal();
                 } else {
                   this.props.addAlert(
                     'Please fill all the fields',
