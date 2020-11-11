@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
 
+//Actions
+import { addAlert } from '../alert/alert.actions';
+
 // User login
 export const addUserDetailsToStore = (user) => ({
   type: AuthActionTypes.ADD_USER,
@@ -50,17 +53,19 @@ export const loginWithCredentialsAsync = (username, password) => {
     await axios
       .post('login', body, config)
       .then((res) => {
-        localStorage.setItem('access_token', res.data.acces_token);
+        localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(res.data.acces_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          dispatch(addAlert('Wrong username or password', 'error', 3000));
+        }
       });
   };
 };
