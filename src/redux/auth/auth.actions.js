@@ -22,17 +22,16 @@ export const signUpWithCredentialAsync = (userName, password) => {
       .get('signup')
       .then((res) => {
         response = res;
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('refresh_token', response.data.refresh_token);
+
+        const parsedToken = JSON.parse(
+          atob(response.data.access_token.split('.')[1])
+        );
+
+        dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .catch((err) => alert('Error:', err));
-
-    localStorage.setItem('access_token', response.data.access_token);
-    localStorage.setItem('refresh_token', response.data.refresh_token);
-
-    const parsedToken = JSON.parse(
-      atob(response.data.access_token.split('.')[1])
-    );
-
-    dispatch(addUserDetailsToStore(parsedToken.username));
   };
 };
 
@@ -45,14 +44,15 @@ export const loginWithCredentialsAsync = (userName, password) => {
       .get('login', { email: userName, password: password })
       .then((res) => {
         response = res.data;
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('refresh_token', response.refresh_token);
+
+        const parsedToken = JSON.parse(
+          atob(response.access_token.split('.')[1])
+        );
+
+        dispatch(addUserDetailsToStore(parsedToken.username));
       });
-
-    localStorage.setItem('access_token', response.access_token);
-    localStorage.setItem('refresh_token', response.refresh_token);
-
-    const parsedToken = JSON.parse(atob(response.access_token.split('.')[1]));
-
-    dispatch(addUserDetailsToStore(parsedToken.username));
   };
 };
 
@@ -67,15 +67,18 @@ export const loginWithRefreshToken = async (refresh_token) => {
           Authorization: refresh_token,
         },
       })
-      .then((res) => (response = res.data))
+      .then((res) => {
+        response = res.data;
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('refresh_token', response.refresh_token);
+
+        const parsedToken = JSON.parse(
+          atob(response.access_token.split('.')[1])
+        );
+
+        dispatch(addUserDetailsToStore(parsedToken.username));
+      })
       .then(() => console.log('Refresh token signin'));
-
-    localStorage.setItem('access_token', response.access_token);
-    localStorage.setItem('refresh_token', response.refresh_token);
-
-    const parsedToken = JSON.parse(atob(response.access_token.split('.')[1]));
-
-    dispatch(addUserDetailsToStore(parsedToken.username));
   };
 };
 
@@ -90,14 +93,13 @@ export const logoutAsync = () => {
     let response;
     await axios.get('logout', { headers: headers }).then((res) => {
       response = res;
+      if (response.status === 200 && response.data.Authorization === '') {
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('access_token');
+        dispatch(removeUserFromStore());
+      } else {
+        alert('Something went wrong! Try again!');
+      }
     });
-
-    if (response.status === 200 && response.data.Authorization === '') {
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('access_token');
-      dispatch(removeUserFromStore());
-    } else {
-      alert('Something went wrong! Try again!');
-    }
   };
 };
