@@ -1,12 +1,6 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
 
-//Request header
-const headers = {
-  'Content-Type': 'application/json',
-  Authorization: localStorage.getItem('access_token'),
-};
-
 // User login
 export const addUserDetailsToStore = (user) => ({
   type: AuthActionTypes.ADD_USER,
@@ -14,12 +8,20 @@ export const addUserDetailsToStore = (user) => ({
 });
 
 // User sign Up async
-export const signUpWithCredentialAsync = (userName, password) => {
+export const signUpWithCredentialAsync = (username, password) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ username: username, password: password });
+
   return async (dispatch) => {
     let response;
 
     await axios
-      .get('signup')
+      .post('signup', body, config)
       .then((res) => {
         response = res;
         localStorage.setItem('access_token', response.data.access_token);
@@ -36,12 +38,20 @@ export const signUpWithCredentialAsync = (userName, password) => {
 };
 
 //User login async
-export const loginWithCredentialsAsync = (userName, password) => {
+export const loginWithCredentialsAsync = (username, password) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ username: username, password: password });
+
   return async (dispatch) => {
     let response;
 
     await axios
-      .get('login', { email: userName, password: password })
+      .post('login', body, config)
       .then((res) => {
         response = res.data;
         localStorage.setItem('access_token', response.access_token);
@@ -52,21 +62,27 @@ export const loginWithCredentialsAsync = (userName, password) => {
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
 
 // User login with refresh token async
 export const loginWithRefreshToken = async (refresh_token) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: refresh_token,
+    },
+  };
+
   return async (dispatch) => {
     let response;
 
     await axios
-      .get('login', {
-        headers: {
-          Authorization: refresh_token,
-        },
-      })
+      .get('login', null, config)
       .then((res) => {
         response = res.data;
         localStorage.setItem('access_token', response.access_token);
@@ -89,9 +105,16 @@ export const removeUserFromStore = () => ({
 
 //User logout async
 export const logoutAsync = () => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('access_token'),
+    },
+  };
+
   return async (dispatch) => {
     let response;
-    await axios.get('logout', { headers: headers }).then((res) => {
+    await axios.get('logout', null, config).then((res) => {
       response = res;
       if (response.status === 200 && response.data.Authorization === '') {
         localStorage.removeItem('refresh_token');
