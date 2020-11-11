@@ -30,7 +30,9 @@ export const signUpWithCredentialAsync = (username, password) => {
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
-      .catch((err) => alert('Error:', err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -85,7 +87,9 @@ export const loginWithRefreshToken = async (refresh_token) => {
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
-      .then(() => console.log('Refresh token signin'));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -104,14 +108,17 @@ export const logoutAsync = () => {
   };
 
   return async (dispatch) => {
-    await axios.get('logout', null, config).then((res) => {
-      if (res.status === 200 && res.data.Authorization === '') {
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
-        dispatch(removeUserFromStore());
-      } else {
-        alert('Something went wrong! Try again!');
-      }
-    });
+    await axios
+      .get('logout', null, config)
+      .then((res) => {
+        if (res.status === 200 && res.data.Authorization === '') {
+          localStorage.removeItem('refresh_token');
+          localStorage.removeItem('access_token');
+          dispatch(removeUserFromStore());
+        } else {
+          alert('Something went wrong! Try again!');
+        }
+      })
+      .catch((err) => console.log(err));
   };
 };
