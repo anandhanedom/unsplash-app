@@ -18,17 +18,14 @@ export const signUpWithCredentialAsync = (username, password) => {
   const body = JSON.stringify({ username: username, password: password });
 
   return async (dispatch) => {
-    let response;
-
     await axios
       .post('signup', body, config)
       .then((res) => {
-        response = res;
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('refresh_token', response.data.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.data.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
@@ -48,17 +45,14 @@ export const loginWithCredentialsAsync = (username, password) => {
   const body = JSON.stringify({ username: username, password: password });
 
   return async (dispatch) => {
-    let response;
-
     await axios
       .post('login', body, config)
       .then((res) => {
-        response = res.data;
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
@@ -79,17 +73,14 @@ export const loginWithRefreshToken = async (refresh_token) => {
   };
 
   return async (dispatch) => {
-    let response;
-
     await axios
       .get('login', null, config)
       .then((res) => {
-        response = res.data;
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
@@ -113,10 +104,8 @@ export const logoutAsync = () => {
   };
 
   return async (dispatch) => {
-    let response;
     await axios.get('logout', null, config).then((res) => {
-      response = res;
-      if (response.status === 200 && response.data.Authorization === '') {
+      if (res.status === 200 && res.data.Authorization === '') {
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('access_token');
         dispatch(removeUserFromStore());
