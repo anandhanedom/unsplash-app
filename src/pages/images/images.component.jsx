@@ -40,8 +40,10 @@ class ImagesPage extends Component {
         <Header />
         {isLoading ? (
           <CircularProgress style={{ marginTop: '100px' }} disableShrink />
-        ) : (
+        ) : images.length ? (
           <Gallery images={filteredImages} />
+        ) : (
+          <h4 style={{ color: 'grey' }}>Add images to display them here</h4>
         )}
         <Modal />
       </div>
