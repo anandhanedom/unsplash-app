@@ -188,7 +188,7 @@ const Header = (props) => {
     const parsedToken = JSON.parse(atob(access_token.split('.')[1]));
 
     props.addUserDetailsToStore(parsedToken.username);
-  });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={classes.grow}>
