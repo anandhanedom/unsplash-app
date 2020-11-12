@@ -7,9 +7,11 @@ import axios from 'axios';
 import { addUserDetailsToStore } from '../auth/auth.actions';
 
 //Request Headers
-const headers = {
-  'Content-Type': 'application/json',
-  Authorization: localStorage.getItem('access_token'),
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+  },
 };
 
 //Add image
@@ -74,13 +76,13 @@ export const fetchImages = () => {
   return async (dispatch) => {
     dispatch(fetchImagesStart());
     await axios
-      .get('images', { headers: headers })
-      .then((res) =>
-        setTimeout(() => {
-          dispatch(fetchImagesSuccess(res.data));
-        }, 1000)
-      )
-      .catch((err) => dispatch(fetchImagesFailure(err)));
+      .get('api/images', null, config)
+      .then((res) => dispatch(fetchImagesSuccess(res.data)))
+      .catch((err) => {
+        console.log(err.response);
+
+        dispatch(fetchImagesFailure(err));
+      });
   };
 };
 
@@ -95,7 +97,7 @@ export const addImageToDb = (title, url, userId) => {
           title: title,
           url: url,
         },
-        { headers: headers }
+        config
       )
       .then((res) => {
         dispatch(addImage(res.data));
@@ -123,7 +125,7 @@ export const deleteImageFromDb = (id, userName, password) => {
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .then(() => {
-        axios.delete(`images/${id}`, { headers: headers }).then((res) => {
+        axios.delete(`images/${id}`, config).then((res) => {
           if (res.request.status === 200) {
             dispatch(deleteImage(id));
             dispatch(toggleModal());

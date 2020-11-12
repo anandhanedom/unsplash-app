@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { AuthActionTypes } from './auth.types';
 
-//Request header
-const headers = {
-  'Content-Type': 'application/json',
-  Authorization: localStorage.getItem('access_token'),
-};
+//Actions
+import { addAlert } from '../alert/alert.actions';
 
 // User login
 export const addUserDetailsToStore = (user) => ({
@@ -14,71 +11,90 @@ export const addUserDetailsToStore = (user) => ({
 });
 
 // User sign Up async
-export const signUpWithCredentialAsync = (userName, password) => {
-  return async (dispatch) => {
-    let response;
+export const signUpWithCredentialAsync = (username, password) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
+  const body = JSON.stringify({ username: username, password: password });
+
+  return async (dispatch) => {
     await axios
-      .get('signup')
+      .post('signup', body, config)
       .then((res) => {
-        response = res;
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('refresh_token', response.data.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.data.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
-      .catch((err) => alert('Error:', err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
 //User login async
-export const loginWithCredentialsAsync = (userName, password) => {
-  return async (dispatch) => {
-    let response;
+export const loginWithCredentialsAsync = (username, password) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
+  const body = JSON.stringify({ username: username, password: password });
+
+  return async (dispatch) => {
     await axios
-      .get('login', { email: userName, password: password })
+      .post('login', body, config)
       .then((res) => {
-        response = res.data;
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          dispatch(addAlert('Wrong username or password', 'error', 3000));
+        }
       });
   };
 };
 
 // User login with refresh token async
 export const loginWithRefreshToken = async (refresh_token) => {
-  return async (dispatch) => {
-    let response;
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: refresh_token,
+    },
+  };
 
+  return async (dispatch) => {
     await axios
-      .get('login', {
-        headers: {
-          Authorization: refresh_token,
-        },
-      })
+      .get('login', null, config)
       .then((res) => {
-        response = res.data;
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.access_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
-      .then(() => console.log('Refresh token signin'));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -89,17 +105,25 @@ export const removeUserFromStore = () => ({
 
 //User logout async
 export const logoutAsync = () => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('access_token'),
+    },
+  };
+
   return async (dispatch) => {
-    let response;
-    await axios.get('logout', { headers: headers }).then((res) => {
-      response = res;
-      if (response.status === 200 && response.data.Authorization === '') {
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
-        dispatch(removeUserFromStore());
-      } else {
-        alert('Something went wrong! Try again!');
-      }
-    });
+    await axios
+      .get('logout', null, config)
+      .then((res) => {
+        if (res.status === 200 && res.data.Authorization === '') {
+          localStorage.removeItem('refresh_token');
+          localStorage.removeItem('access_token');
+          dispatch(removeUserFromStore());
+        } else {
+          alert('Something went wrong! Try again!');
+        }
+      })
+      .catch((err) => console.log(err));
   };
 };
