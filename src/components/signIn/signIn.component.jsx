@@ -70,7 +70,7 @@ const SignIn = (props) => {
       await props.loginWithCredentialsAsync(email, password);
       props.history.push('/');
     } else {
-      props.addAlert('Please fill all the fields', 'error', 3000);
+      props.addAlert('Please fill in both the fields', 'error', 3000);
     }
   };
 
@@ -93,10 +93,9 @@ const SignIn = (props) => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Username"
             name="email"
             autoComplete="email"
             autoFocus
@@ -104,7 +103,6 @@ const SignIn = (props) => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Password"
