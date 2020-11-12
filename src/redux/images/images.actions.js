@@ -76,7 +76,7 @@ export const fetchImages = () => {
   return async (dispatch) => {
     dispatch(fetchImagesStart());
     await axios
-      .get('images/', null, config)
+      .get('api/images', null, config)
       .then((res) => dispatch(fetchImagesSuccess(res.data)))
       .catch((err) => {
         console.log(err.response);
