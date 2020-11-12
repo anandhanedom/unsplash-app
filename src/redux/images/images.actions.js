@@ -76,7 +76,7 @@ export const fetchImages = () => {
   return async (dispatch) => {
     dispatch(fetchImagesStart());
     await axios
-      .get('api/images', null, config)
+      .get('/api/images', null, config)
       .then((res) => dispatch(fetchImagesSuccess(res.data)))
       .catch((err) => {
         console.log(err.response);
@@ -91,7 +91,7 @@ export const addImageToDb = (title, url, userId) => {
   return async (dispatch) => {
     await axios
       .post(
-        `images`,
+        `/images`,
         {
           userID: userId,
           title: title,
@@ -111,7 +111,7 @@ export const deleteImageFromDb = (id, userName, password) => {
   let response = null;
   return async (dispatch) => {
     await axios
-      .get('login', { email: userName, password: password })
+      .get('/login', { email: userName, password: password })
       .then((res) => {
         response = res.data;
 
@@ -125,7 +125,7 @@ export const deleteImageFromDb = (id, userName, password) => {
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .then(() => {
-        axios.delete(`images/${id}`, config).then((res) => {
+        axios.delete(`/images/${id}`, config).then((res) => {
           if (res.request.status === 200) {
             dispatch(deleteImage(id));
             dispatch(toggleModal());

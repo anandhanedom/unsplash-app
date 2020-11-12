@@ -22,7 +22,7 @@ export const signUpWithCredentialAsync = (username, password) => {
 
   return async (dispatch) => {
     await axios
-      .post('signup', body, config)
+      .post('/signup', body, config)
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
@@ -51,13 +51,13 @@ export const loginWithCredentialsAsync = (username, password) => {
 
   return async (dispatch) => {
     await axios
-      .post('login', body, config)
+      .post('/login', body, config)
       .then((res) => {
-        localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('access_token', res.data.acces_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(res.data.access_token.split('.')[1])
+          atob(res.data.acces_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
@@ -81,7 +81,7 @@ export const loginWithRefreshToken = async (refresh_token) => {
 
   return async (dispatch) => {
     await axios
-      .get('login', null, config)
+      .get('/login', null, config)
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
@@ -114,7 +114,7 @@ export const logoutAsync = () => {
 
   return async (dispatch) => {
     await axios
-      .get('logout', null, config)
+      .post('/logout/', null, config)
       .then((res) => {
         if (res.status === 200 && res.data.Authorization === '') {
           localStorage.removeItem('refresh_token');
