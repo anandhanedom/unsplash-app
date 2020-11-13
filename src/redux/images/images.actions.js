@@ -6,14 +6,6 @@ import axios from 'axios';
 //Actions
 import { addUserDetailsToStore } from '../auth/auth.actions';
 
-//Request Headers
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  },
-};
-
 //Add image
 export const addImage = (image) => {
   return {
@@ -73,10 +65,18 @@ export const fetchImagesFailure = (err) => {
 
 //Fetch images from db
 export const fetchImages = () => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  };
+
   return async (dispatch) => {
     dispatch(fetchImagesStart());
+    console.log(config);
     await axios
-      .get('api/images', null, config)
+      .post('/api/images/', null, config)
       .then((res) => dispatch(fetchImagesSuccess(res.data)))
       .catch((err) => {
         console.log(err.response);
@@ -88,10 +88,17 @@ export const fetchImages = () => {
 
 //Add image to db
 export const addImageToDb = (title, url, userId) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  };
+
   return async (dispatch) => {
     await axios
       .post(
-        `images`,
+        '/api/images/',
         {
           userID: userId,
           title: title,
@@ -108,10 +115,17 @@ export const addImageToDb = (title, url, userId) => {
 
 //Delete image from db
 export const deleteImageFromDb = (id, userName, password) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  };
+
   let response = null;
   return async (dispatch) => {
     await axios
-      .get('login', { email: userName, password: password })
+      .get('/login', { email: userName, password: password })
       .then((res) => {
         response = res.data;
 
@@ -125,7 +139,7 @@ export const deleteImageFromDb = (id, userName, password) => {
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .then(() => {
-        axios.delete(`images/${id}`, config).then((res) => {
+        axios.delete(`/images/${id}`, config).then((res) => {
           if (res.request.status === 200) {
             dispatch(deleteImage(id));
             dispatch(toggleModal());
