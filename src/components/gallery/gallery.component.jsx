@@ -18,8 +18,8 @@ const Gallery = (props) => {
         {images.map((img) => (
           <ImageCard
             key={img.id}
-            imgSrc={img.url}
-            title={img.title}
+            imgSrc={img.imagename}
+            title={img.label}
             id={img.id}
           />
         ))}

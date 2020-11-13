@@ -5,6 +5,7 @@ import axios from 'axios';
 
 //Actions
 import { addUserDetailsToStore } from '../auth/auth.actions';
+import { addAlert } from '../alert/alert.actions';
 
 //Add image
 export const addImage = (image) => {
@@ -65,23 +66,24 @@ export const fetchImagesFailure = (err) => {
 
 //Fetch images from db
 export const fetchImages = () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  };
-
   return async (dispatch) => {
     dispatch(fetchImagesStart());
-    console.log(config);
-    await axios
-      .post('/api/images/', null, config)
-      .then((res) => dispatch(fetchImagesSuccess(res.data)))
+
+    await axios({
+      method: 'get',
+      url: '/api/images/',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+      },
+    })
+      .then((res) => {
+        // console.log(res);
+        dispatch(fetchImagesSuccess(res.data));
+      })
       .catch((err) => {
         console.log(err.response);
-
-        dispatch(fetchImagesFailure(err));
+        dispatch(fetchImagesFailure(err.response));
       });
   };
 };
@@ -114,37 +116,52 @@ export const addImageToDb = (title, url, userId) => {
 };
 
 //Delete image from db
-export const deleteImageFromDb = (id, userName, password) => {
+export const deleteImageFromDb = (id, username, password) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   };
 
-  let response = null;
   return async (dispatch) => {
-    await axios
-      .get('/login', { email: userName, password: password })
-      .then((res) => {
-        response = res.data;
+    const body = JSON.stringify({ username: username, password: password });
 
-        localStorage.setItem('access_token', response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
+    await axios
+      .post('/login', body, config)
+      .then((res) => {
+        localStorage.setItem('access_token', res.data.acces_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
 
         const parsedToken = JSON.parse(
-          atob(response.access_token.split('.')[1])
+          atob(res.data.acces_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
       .then(() => {
-        axios.delete(`/images/${id}`, config).then((res) => {
-          if (res.request.status === 200) {
-            dispatch(deleteImage(id));
-            dispatch(toggleModal());
-          }
-        });
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        };
+
+        axios
+          .delete(`/api/images/${id}/`, config)
+          .then((res) => {
+            if (res.status === 200) {
+              dispatch(deleteImage(id));
+              dispatch(toggleModal());
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          dispatch(addAlert('Wrong password', 'error', 3000));
+        }
       });
   };
 };
