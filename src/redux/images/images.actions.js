@@ -66,6 +66,8 @@ export const fetchImagesFailure = (err) => {
 //Fetch images from db
 export const fetchImages = () => {
   return async (dispatch) => {
+    dispatch(fetchImagesStart());
+
     await axios({
       method: 'get',
       url: '/api/images/',
