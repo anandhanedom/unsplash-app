@@ -65,24 +65,33 @@ export const fetchImagesFailure = (err) => {
 
 //Fetch images from db
 export const fetchImages = () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  };
-
   return async (dispatch) => {
-    dispatch(fetchImagesStart());
-    console.log(config);
-    await axios
-      .post('/api/images/', null, config)
-      .then((res) => dispatch(fetchImagesSuccess(res.data)))
+    await axios({
+      method: 'get',
+      url: '/api/images/',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
       .catch((err) => {
-        console.log(err.response);
-
-        dispatch(fetchImagesFailure(err));
+        console.log(err);
       });
+
+    // await axios
+    //   .get('/api/images/', null, config)
+    //   .then((res) => {
+    //     console.log(res);
+    //     // dispatch(fetchImagesSuccess(res.data));
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+
+    //     // dispatch(fetchImagesFailure(err));
+    //   });
   };
 };
 
