@@ -5,6 +5,7 @@ import axios from 'axios';
 
 //Actions
 import { addUserDetailsToStore } from '../auth/auth.actions';
+import { addAlert } from '../alert/alert.actions';
 
 //Add image
 export const addImage = (image) => {
@@ -77,7 +78,7 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
@@ -156,6 +157,11 @@ export const deleteImageFromDb = (id, username, password) => {
           .catch((err) => {
             console.log(err);
           });
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          dispatch(addAlert('Wrong password', 'error', 3000));
+        }
       });
   };
 };
