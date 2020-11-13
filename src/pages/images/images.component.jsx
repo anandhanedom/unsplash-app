@@ -32,7 +32,7 @@ class ImagesPage extends Component {
 
     const filteredImages = images.filter((img) => {
       const regex = new RegExp(`${this.props.searchValue}`, 'gi');
-      return img.title.match(regex);
+      return img.label.match(regex);
     });
 
     return (

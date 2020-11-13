@@ -75,23 +75,13 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
+        dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        dispatch(fetchImagesFailure(err.response));
       });
-
-    // await axios
-    //   .get('/api/images/', null, config)
-    //   .then((res) => {
-    //     console.log(res);
-    //     // dispatch(fetchImagesSuccess(res.data));
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-
-    //     // dispatch(fetchImagesFailure(err));
-    //   });
   };
 };
 
