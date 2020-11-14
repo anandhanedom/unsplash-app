@@ -24,14 +24,20 @@ export const signUpWithCredentialAsync = (username, password) => {
     await axios
       .post('/signup', body, config)
       .then((res) => {
-        localStorage.setItem('access_token', res.data.acces_token);
-        localStorage.setItem('refresh_token', res.data.refresh_token);
+        console.log(res);
 
-        const parsedToken = JSON.parse(
-          atob(res.data.acces_token.split('.')[1])
-        );
+        if (res.data !== 'username already taken') {
+          localStorage.setItem('access_token', res.data.acces_token);
+          localStorage.setItem('refresh_token', res.data.refresh_token);
 
-        dispatch(addUserDetailsToStore(parsedToken.username));
+          const parsedToken = JSON.parse(
+            atob(res.data.acces_token.split('.')[1])
+          );
+
+          dispatch(addUserDetailsToStore(parsedToken.username));
+        } else {
+          dispatch(addAlert('Username already taken', 'error', 3000));
+        }
       })
       .catch((err) => {
         console.log(err);
