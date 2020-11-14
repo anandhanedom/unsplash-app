@@ -39,6 +39,37 @@ export const signUpWithCredentialAsync = (username, password) => {
   };
 };
 
+//Refresh token login
+export const loginWithRefreshToken = () => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('refresh_token')}`,
+    },
+  };
+
+  const body = null;
+  console.log('before token refresh axios');
+
+  return async (dispatch) => {
+    console.log('inside token refresh axios');
+
+    await axios
+      .post('/login', body, config)
+      .then((res) => {
+        localStorage.setItem('access_token', res.data.acces_token);
+        localStorage.setItem('refresh_token', res.data.refresh_token);
+
+        const parsedToken = JSON.parse(
+          atob(res.data.acces_token.split('.')[1])
+        );
+
+        dispatch(addUserDetailsToStore(parsedToken.username));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
 //User login async
 export const loginWithCredentialsAsync = (username, password) => {
   const config = {
@@ -66,34 +97,6 @@ export const loginWithCredentialsAsync = (username, password) => {
         if (err.response.status === 401) {
           dispatch(addAlert('Wrong username or password', 'error', 3000));
         }
-      });
-  };
-};
-
-// User login with refresh token async
-export const loginWithRefreshToken = async (refresh_token) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: refresh_token,
-    },
-  };
-
-  return async (dispatch) => {
-    await axios
-      .get('/login', null, config)
-      .then((res) => {
-        localStorage.setItem('access_token', res.data.access_token);
-        localStorage.setItem('refresh_token', res.data.refresh_token);
-
-        const parsedToken = JSON.parse(
-          atob(res.data.access_token.split('.')[1])
-        );
-
-        dispatch(addUserDetailsToStore(parsedToken.username));
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 };

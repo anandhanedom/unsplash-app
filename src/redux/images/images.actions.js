@@ -78,7 +78,6 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {

@@ -35,20 +35,23 @@ class App extends Component {
   });
 
   shouldTokenRefresh = (token) => {
+    console.log('should token refresh');
     const parsedToken = JSON.parse(atob(token.split('.')[1]));
     // const username = parsedToken.username;
     const tokenExpiry = parsedToken.exp;
     const currentTimeStamp = Math.floor(Date.now() / 1000);
     // console.log(tokenExpiry < currentTimeStamp);
-    return tokenExpiry < currentTimeStamp ? true : false;
+    // return tokenExpiry < currentTimeStamp ? true : false;
+    return true;
   };
 
   componentDidMount() {
+    console.log('app component ran!');
     const accessToken = localStorage.getItem('access_token');
     const refreshToken = localStorage.getItem('refresh_token');
     if (refreshToken && this.shouldTokenRefresh(accessToken)) {
-      // console.log('Logging with refresh token');
-      loginWithRefreshToken(refreshToken);
+      console.log('Logging with refresh token');
+      this.props.loginWithRefreshToken(refreshToken);
     }
   }
 
