@@ -89,7 +89,7 @@ export const fetchImages = () => {
 };
 
 //Add image to db
-export const addImageToDb = (label, imagename, userid) => {
+export const addImageToDb = (label, imagename) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -97,10 +97,14 @@ export const addImageToDb = (label, imagename, userid) => {
     },
   };
 
+  const parsedToken = JSON.parse(
+    atob(localStorage.getItem('access_token').split('.')[1])
+  );
+
   const body = {
     label: label,
     imagename: imagename,
-    userid: userid,
+    userid: parsedToken.user_id,
   };
 
   return async (dispatch) => {

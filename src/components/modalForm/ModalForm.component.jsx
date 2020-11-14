@@ -46,7 +46,6 @@ class ModalForm extends Component {
     this.state = {
       label: '',
       password: '',
-      url: '',
       file: null,
     };
   }
@@ -140,16 +139,7 @@ class ModalForm extends Component {
               onChange={this.handleLabelChange}
             />
           </div>
-          <div style={{ marginTop: '30px' }}>
-            <TextField
-              // id="outlined-secondary"
-              label="Photo URL"
-              variant="outlined"
-              color="primary"
-              fullWidth={true}
-              onChange={this.handleUrlChange}
-            />
-          </div>
+
           <div
             style={{
               marginTop: '30px',
@@ -186,11 +176,10 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={async () => {
-                if (this.state.label && this.state.url) {
+                if (this.state.label && this.state.file) {
                   await this.props.addImageToDb(
                     this.state.label,
-                    this.state.url,
-                    '5f991308d4adb48f8a1c9702' //userId
+                    this.state.url
                   );
                 } else {
                   this.props.addAlert(
