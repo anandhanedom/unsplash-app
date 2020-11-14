@@ -147,7 +147,7 @@ export const deleteImageFromDb = (id, username, password) => {
         };
 
         axios
-          .delete(`/api/images/${id}/`, config)
+          .delete(`/api/images/id/${id}`, config)
           .then((res) => {
             if (res.status === 200) {
               dispatch(deleteImage(id));
