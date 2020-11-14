@@ -40,7 +40,7 @@ export const signUpWithCredentialAsync = (username, password) => {
 };
 
 //Refresh token login
-export const loginWithRefreshToken = () => {
+export const loginWithRefreshToken = (refresh_token) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -48,15 +48,20 @@ export const loginWithRefreshToken = () => {
     },
   };
 
-  const body = null;
-  console.log('before token refresh axios');
+  console.log(config);
 
   return async (dispatch) => {
-    console.log('inside token refresh axios');
-
-    await axios
-      .post('/login', body, config)
+    await axios({
+      method: 'post',
+      url: '/login',
+      body: {},
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + refresh_token,
+      },
+    })
       .then((res) => {
+        console.log(res);
         localStorage.setItem('access_token', res.data.acces_token);
         localStorage.setItem('refresh_token', res.data.refresh_token);
 
