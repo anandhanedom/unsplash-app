@@ -78,7 +78,7 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
@@ -89,7 +89,7 @@ export const fetchImages = () => {
 };
 
 //Add image to db
-export const addImageToDb = (title, url, userId) => {
+export const addImageToDb = (label, imagename, userid) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -97,20 +97,21 @@ export const addImageToDb = (title, url, userId) => {
     },
   };
 
+  const body = {
+    label: label,
+    imagename: imagename,
+    userid: userid,
+  };
+
   return async (dispatch) => {
     await axios
-      .post(
-        '/api/images/',
-        {
-          userID: userId,
-          title: title,
-          url: url,
-        },
-        config
-      )
+      .post('/api/images/', body, config)
       .then((res) => {
         dispatch(addImage(res.data));
         dispatch(toggleModal());
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };

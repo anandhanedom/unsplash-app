@@ -22,7 +22,6 @@ import { selectUser } from '../../redux/auth/auth.selectors';
 import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = (theme) => ({
   root: {
