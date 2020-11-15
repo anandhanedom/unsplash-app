@@ -78,7 +78,7 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
@@ -89,28 +89,34 @@ export const fetchImages = () => {
 };
 
 //Add image to db
-export const addImageToDb = (title, url, userId) => {
+export const addImageToDb = (label, imagename) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   };
 
+  const parsedToken = JSON.parse(
+    atob(localStorage.getItem('access_token').split('.')[1])
+  );
+
+  const body = JSON.stringify({
+    label: label,
+    imagename: imagename,
+    userid: parsedToken.user_id,
+  });
+
   return async (dispatch) => {
     await axios
-      .post(
-        '/api/images/',
-        {
-          userID: userId,
-          title: title,
-          url: url,
-        },
-        config
-      )
+      .post('/api/images/', body, config)
       .then((res) => {
-        dispatch(addImage(res.data));
+        console.log(res);
+        // dispatch(addImage(res.data));
         dispatch(toggleModal());
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -147,7 +153,7 @@ export const deleteImageFromDb = (id, username, password) => {
         };
 
         axios
-          .delete(`/api/images/${id}/`, config)
+          .delete(`/api/images/id/${id}`, config)
           .then((res) => {
             if (res.status === 200) {
               dispatch(deleteImage(id));

@@ -22,7 +22,6 @@ import { selectUser } from '../../redux/auth/auth.selectors';
 import { withStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = (theme) => ({
   root: {
@@ -47,7 +46,6 @@ class ModalForm extends Component {
     this.state = {
       label: '',
       password: '',
-      url: '',
       file: null,
     };
   }
@@ -141,16 +139,7 @@ class ModalForm extends Component {
               onChange={this.handleLabelChange}
             />
           </div>
-          <div style={{ marginTop: '30px' }}>
-            <TextField
-              // id="outlined-secondary"
-              label="Photo URL"
-              variant="outlined"
-              color="primary"
-              fullWidth={true}
-              onChange={this.handleUrlChange}
-            />
-          </div>
+
           <div
             style={{
               marginTop: '30px',
@@ -187,12 +176,11 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={async () => {
-                if (this.state.label && this.state.url) {
-                  await this.props.addImageToDb(
-                    this.state.label,
-                    this.state.url,
-                    '5f991308d4adb48f8a1c9702' //userId
-                  );
+                if (this.state.label && this.state.file) {
+                  const fd = new FormData();
+                  fd.append('imagename', this.state.file);
+
+                  await this.props.addImageToDb(this.state.label, fd);
                 } else {
                   this.props.addAlert(
                     'Please fill all the fields',
