@@ -71,7 +71,7 @@ export const loginWithRefreshToken = (refresh_token) => {
         localStorage.setItem('access_token', res.data.access_token);
 
         const parsedToken = JSON.parse(
-          atob(res.data.acces_token.split('.')[1])
+          atob(res.data.access_token.split('.')[1])
         );
 
         dispatch(addUserDetailsToStore(parsedToken.username));
