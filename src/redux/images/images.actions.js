@@ -78,6 +78,7 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
+        console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
@@ -91,7 +92,7 @@ export const fetchImages = () => {
 export const addImageToDb = (label, imagename) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   };
@@ -100,17 +101,18 @@ export const addImageToDb = (label, imagename) => {
     atob(localStorage.getItem('access_token').split('.')[1])
   );
 
-  const body = {
+  const body = JSON.stringify({
     label: label,
     imagename: imagename,
     userid: parsedToken.user_id,
-  };
+  });
 
   return async (dispatch) => {
     await axios
       .post('/api/images/', body, config)
       .then((res) => {
-        dispatch(addImage(res.data));
+        console.log(res);
+        // dispatch(addImage(res.data));
         dispatch(toggleModal());
       })
       .catch((err) => {

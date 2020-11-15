@@ -68,8 +68,7 @@ export const loginWithRefreshToken = (refresh_token) => {
     })
       .then((res) => {
         console.log(res);
-        localStorage.setItem('access_token', res.data.acces_token);
-        localStorage.setItem('refresh_token', res.data.refresh_token);
+        localStorage.setItem('access_token', res.data.access_token);
 
         const parsedToken = JSON.parse(
           atob(res.data.acces_token.split('.')[1])

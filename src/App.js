@@ -49,8 +49,9 @@ class App extends Component {
   componentDidMount() {
     const accessToken = localStorage.getItem('access_token');
     const refreshToken = localStorage.getItem('refresh_token');
+
     if (refreshToken && this.shouldTokenRefresh(accessToken)) {
-      console.log('Logging with refresh token');
+      console.log('***Logging with refresh token ****');
       this.props.loginWithRefreshToken(refreshToken);
     }
   }
