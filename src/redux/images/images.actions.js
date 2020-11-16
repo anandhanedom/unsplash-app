@@ -89,31 +89,26 @@ export const fetchImages = () => {
 };
 
 //Add image to db
-export const addImageToDb = (label, imagename) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  };
-
-  const parsedToken = JSON.parse(
-    atob(localStorage.getItem('access_token').split('.')[1])
-  );
-
-  const body = JSON.stringify({
-    label: label,
-    imagename: imagename,
-    userid: parsedToken.user_id,
-  });
+export const addImageToDb = (fd) => {
+  console.log(fd);
 
   return async (dispatch) => {
-    await axios
-      .post('/api/images/', body, config)
+    await axios({
+      method: 'post',
+      url: '/api/images/',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      body: fd,
+    })
       .then((res) => {
         console.log(res);
-        // dispatch(addImage(res.data));
-        dispatch(toggleModal());
+
+        if (res.status === 200) {
+          // dispatch(addImage(res.data));
+          dispatch(toggleModal());
+        }
       })
       .catch((err) => {
         console.log(err);

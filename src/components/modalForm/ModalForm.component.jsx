@@ -178,9 +178,16 @@ class ModalForm extends Component {
               onClick={async () => {
                 if (this.state.label && this.state.file) {
                   const fd = new FormData();
-                  fd.append('imagename', this.state.file);
+                  const access_token = localStorage.getItem('access_token');
+                  const parsedToken = JSON.parse(
+                    atob(access_token.split('.')[1])
+                  );
 
-                  await this.props.addImageToDb(this.state.label, fd);
+                  fd.append('label', this.state.label);
+                  fd.append('userid', parsedToken.user_id);
+                  fd.append('imagename', this.state.file, this.state.file.name);
+
+                  await this.props.addImageToDb(fd);
                 } else {
                   this.props.addAlert(
                     'Please fill all the fields',
@@ -214,8 +221,7 @@ class ModalForm extends Component {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
 
-  addImageToDb: (title, url, userId) =>
-    dispatch(addImageToDb(title, url, userId)),
+  addImageToDb: (fd) => dispatch(addImageToDb(fd)),
 
   deleteImageFromDb: (id, userName, password) =>
     dispatch(deleteImageFromDb(id, userName, password)),
