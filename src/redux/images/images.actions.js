@@ -90,18 +90,18 @@ export const fetchImages = () => {
 
 //Add image to db
 export const addImageToDb = (fd) => {
-  console.log(fd);
+  for (var value of fd.values()) {
+    console.log(value);
+  }
 
   return async (dispatch) => {
-    await axios({
-      method: 'post',
-      url: '/api/images/',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-      body: fd,
-    })
+    await axios
+      .post('/api/images/', fd, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('access_token')} `,
+        },
+      })
       .then((res) => {
         console.log(res);
 
