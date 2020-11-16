@@ -47,15 +47,6 @@ export const signUpWithCredentialAsync = (username, password) => {
 
 //Refresh token login
 export const loginWithRefreshToken = (refresh_token) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('refresh_token')}`,
-    },
-  };
-
-  console.log(config);
-
   return async (dispatch) => {
     await axios({
       method: 'post',

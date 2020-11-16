@@ -46,7 +46,6 @@ class ModalForm extends Component {
     this.state = {
       label: '',
       password: '',
-      file: null,
     };
   }
 
@@ -145,21 +144,7 @@ class ModalForm extends Component {
               marginTop: '30px',
             }}
           >
-            <input
-              type="file"
-              onChange={this.handleSelectedFile}
-              style={{ display: 'none' }}
-              ref={(fileInput) => (this.fileInput = fileInput)}
-            />
-            <Button
-              variant="contained"
-              color={this.state.file ? 'primary' : 'default'}
-              style={{ textTransform: 'none', borderRadius: '24px' }}
-              size="small"
-              onClick={() => this.fileInput.click()}
-            >
-              {this.state.file ? 'File chosen \u2714' : 'Choose File'}
-            </Button>
+            <input type="file" id="imageUrl" />
           </div>
           <div className={this.props.classes.btnSpace}>
             <Button
@@ -176,11 +161,16 @@ class ModalForm extends Component {
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
               onClick={async () => {
-                if (this.state.label && this.state.file) {
-                  const fd = new FormData();
-                  fd.append('imagename', this.state.file);
+                const url = document.getElementById('imageUrl');
 
-                  await this.props.addImageToDb(this.state.label, fd);
+                if (this.state.label && url !== '') {
+                  const file = url.files[0];
+                  let imageData = new FormData();
+
+                  imageData.append('label', this.state.label);
+                  imageData.append('imagename', file, file.name);
+
+                  await this.props.addImageToDb(imageData);
                 } else {
                   this.props.addAlert(
                     'Please fill all the fields',
@@ -214,8 +204,7 @@ class ModalForm extends Component {
 const mapDispatchToProps = (dispatch) => ({
   toggleModal: () => dispatch(toggleModal()),
 
-  addImageToDb: (title, url, userId) =>
-    dispatch(addImageToDb(title, url, userId)),
+  addImageToDb: (fd) => dispatch(addImageToDb(fd)),
 
   deleteImageFromDb: (id, userName, password) =>
     dispatch(deleteImageFromDb(id, userName, password)),
