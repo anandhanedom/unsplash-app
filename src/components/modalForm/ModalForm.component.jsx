@@ -160,7 +160,7 @@ class ModalForm extends Component {
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={() => {
+              onClick={async () => {
                 const url = document.getElementById('imageUrl');
 
                 if (this.state.label && url !== '') {
@@ -170,7 +170,7 @@ class ModalForm extends Component {
                   imageData.append('label', this.state.label);
                   imageData.append('imagename', file, file.name);
 
-                  this.props.addImageToDb(imageData);
+                  await this.props.addImageToDb(imageData);
                 } else {
                   this.props.addAlert(
                     'Please fill all the fields',

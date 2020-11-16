@@ -103,7 +103,7 @@ export const addImageToDb = (fd) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
 
         if (res.status === 200) {
           // dispatch(addImage(res.data));
