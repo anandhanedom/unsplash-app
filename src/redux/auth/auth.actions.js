@@ -24,8 +24,6 @@ export const signUpWithCredentialAsync = (username, password) => {
     await axios
       .post('/signup', body, config)
       .then((res) => {
-        console.log(res);
-
         if (res.data !== 'username already taken') {
           localStorage.setItem('access_token', res.data.acces_token);
           localStorage.setItem('refresh_token', res.data.refresh_token);
@@ -40,7 +38,7 @@ export const signUpWithCredentialAsync = (username, password) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 };
@@ -58,7 +56,6 @@ export const loginWithRefreshToken = (refresh_token) => {
       },
     })
       .then((res) => {
-        console.log(res);
         localStorage.setItem('access_token', res.data.access_token);
 
         const parsedToken = JSON.parse(
@@ -67,7 +64,7 @@ export const loginWithRefreshToken = (refresh_token) => {
 
         dispatch(addUserDetailsToStore(parsedToken.username));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 };
 
@@ -128,6 +125,6 @@ export const logoutAsync = () => {
           alert('Something went wrong! Try again!');
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   };
 };

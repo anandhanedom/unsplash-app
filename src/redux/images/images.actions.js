@@ -78,11 +78,10 @@ export const fetchImages = () => {
       },
     })
       .then((res) => {
-        // console.log(res);
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
-        console.log(err.response);
+        alert(err.response);
         dispatch(fetchImagesFailure(err.response));
       });
   };
@@ -90,10 +89,6 @@ export const fetchImages = () => {
 
 //Add image to db
 export const addImageToDb = (fd) => {
-  for (var value of fd.values()) {
-    console.log(value);
-  }
-
   return async (dispatch) => {
     await axios
       .post('/api/images/', fd, {
@@ -109,7 +104,7 @@ export const addImageToDb = (fd) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 };
@@ -154,7 +149,7 @@ export const deleteImageFromDb = (id, username, password) => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
       })
       .catch((err) => {
