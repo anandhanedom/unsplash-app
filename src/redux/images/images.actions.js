@@ -81,8 +81,8 @@ export const fetchImages = () => {
         dispatch(fetchImagesSuccess(res.data));
       })
       .catch((err) => {
-        alert(err.response);
         dispatch(fetchImagesFailure(err.response));
+        alert(err.response);
       });
   };
 };
