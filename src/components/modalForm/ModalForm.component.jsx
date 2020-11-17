@@ -67,6 +67,34 @@ class ModalForm extends Component {
     this.setState({ file: e.target.files[0] });
   };
 
+  onSubmit = async () => {
+    const url = document.getElementById('imageUrl');
+
+    if (this.state.label && url !== '') {
+      const file = url.files[0];
+      let imageData = new FormData();
+
+      imageData.append('label', this.state.label);
+      imageData.append('imagename', file, file.name);
+
+      await this.props.addImageToDb(imageData);
+    } else {
+      this.props.addAlert('Please fill all the fields', 'error', 3000);
+    }
+  };
+
+  onDelete = async () => {
+    if (this.state.password) {
+      await this.props.deleteImageFromDb(
+        this.props.deleteId,
+        this.props.userName,
+        this.state.password
+      );
+    } else {
+      this.props.addAlert('Please enter your password', 'error', 3000);
+    }
+  };
+
   returnModalForm(type) {
     let modalForm;
 
@@ -101,21 +129,7 @@ class ModalForm extends Component {
               color="secondary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={async () => {
-                if (this.state.password) {
-                  await this.props.deleteImageFromDb(
-                    this.props.deleteId,
-                    this.props.userName,
-                    this.state.password
-                  );
-                } else {
-                  this.props.addAlert(
-                    'Please enter your password',
-                    'error',
-                    3000
-                  );
-                }
-              }}
+              onClick={this.onDelete}
             >
               Delete
             </Button>
@@ -160,25 +174,7 @@ class ModalForm extends Component {
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={async () => {
-                const url = document.getElementById('imageUrl');
-
-                if (this.state.label && url !== '') {
-                  const file = url.files[0];
-                  let imageData = new FormData();
-
-                  imageData.append('label', this.state.label);
-                  imageData.append('imagename', file, file.name);
-
-                  await this.props.addImageToDb(imageData);
-                } else {
-                  this.props.addAlert(
-                    'Please fill all the fields',
-                    'error',
-                    3000
-                  );
-                }
-              }}
+              onClick={this.onSubmit}
             >
               Submit
             </Button>
