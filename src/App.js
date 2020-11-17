@@ -43,7 +43,7 @@ class App extends Component {
 
     // return true;
 
-    return tokenExpiry < currentTimeStamp ? true : false;
+    return tokenExpiry < currentTimeStamp;
   };
 
   componentDidMount() {
