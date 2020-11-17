@@ -101,6 +101,9 @@ export const addImageToDb = (fd) => {
         if (res.status === 200) {
           dispatch(addImage(res.data));
           dispatch(toggleModal());
+          setTimeout(() => {
+            alert('Image added successfully!');
+          }, 300);
         }
       })
       .catch((err) => {
@@ -146,6 +149,9 @@ export const deleteImageFromDb = (id, username, password) => {
             if (res.status === 200) {
               dispatch(deleteImage(id));
               dispatch(toggleModal());
+              setTimeout(() => {
+                alert('Image deleted successfully!');
+              }, 300);
             }
           })
           .catch((err) => {
