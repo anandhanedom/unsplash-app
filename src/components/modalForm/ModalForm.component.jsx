@@ -82,7 +82,7 @@ class ModalForm extends Component {
 
       await this.props.addImageToDb(imageData);
     } else {
-      this.props.addAlert('Please fill all the fields', 'error', 3000);
+      this.props.addAlert('Please fill all the fields', 'error', 2000);
     }
   };
 
@@ -96,7 +96,7 @@ class ModalForm extends Component {
         this.state.password
       );
     } else {
-      this.props.addAlert('Please enter your password', 'error', 3000);
+      this.props.addAlert('Please enter your password', 'error', 2000);
     }
   };
 
