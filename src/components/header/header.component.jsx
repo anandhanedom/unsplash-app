@@ -129,7 +129,7 @@ const Header = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Close</MenuItem>
       <MenuItem
         onClick={async () => {
           handleMenuClose();
