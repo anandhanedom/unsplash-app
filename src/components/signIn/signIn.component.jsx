@@ -70,7 +70,7 @@ const SignIn = (props) => {
       await props.loginWithCredentialsAsync(email, password);
       props.history.push('/');
     } else {
-      props.addAlert('Please fill in both the fields', 'error', 3000);
+      props.addAlert('Please fill in both the fields', 'error', 2000);
     }
   };
 
@@ -86,7 +86,7 @@ const SignIn = (props) => {
           variant="h5"
           style={{ marginBottom: '30px' }}
         >
-          Sign in
+          Sign In
         </Typography>
         <Alerts />
         <form className={classes.form}>
@@ -156,7 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
   loginWithCredentialsAsync: (userName, password) =>
     dispatch(loginWithCredentialsAsync(userName, password)),
 
-  addAlert: (msg, type, timeeout) => dispatch(addAlert(msg, type, timeeout)),
+  addAlert: (msg, type, timeout) => dispatch(addAlert(msg, type, timeout)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(SignIn));

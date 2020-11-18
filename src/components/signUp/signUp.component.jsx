@@ -83,7 +83,7 @@ const SignUp = (props) => {
           variant="h5"
           style={{ marginBottom: '30px' }}
         >
-          Sign up
+          Sign Up
         </Typography>
         <Alerts />
 
