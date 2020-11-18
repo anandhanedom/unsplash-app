@@ -160,7 +160,7 @@ export const deleteImageFromDb = (id, username, password) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          dispatch(addAlert('Wrong password', 'error', 3000));
+          dispatch(addAlert('Wrong password', 'error', 2000));
         }
       });
   };

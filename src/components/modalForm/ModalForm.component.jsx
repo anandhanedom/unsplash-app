@@ -67,11 +67,14 @@ class ModalForm extends Component {
     this.setState({ file: e.target.files[0] });
   };
 
-  onSubmit = async () => {
+  onAdd = async (e) => {
+    e.preventDefault();
+
     const url = document.getElementById('imageUrl');
 
-    if (this.state.label && url !== '') {
-      const file = url.files[0];
+    const file = url.files[0];
+
+    if (this.state.label && file) {
       let imageData = new FormData();
 
       imageData.append('label', this.state.label);
@@ -79,11 +82,13 @@ class ModalForm extends Component {
 
       await this.props.addImageToDb(imageData);
     } else {
-      this.props.addAlert('Please fill all the fields', 'error', 3000);
+      this.props.addAlert('Please fill all the fields', 'error', 2000);
     }
   };
 
-  onDelete = async () => {
+  onDelete = async (e) => {
+    e.preventDefault();
+
     if (this.state.password) {
       await this.props.deleteImageFromDb(
         this.props.deleteId,
@@ -91,7 +96,7 @@ class ModalForm extends Component {
         this.state.password
       );
     } else {
-      this.props.addAlert('Please enter your password', 'error', 3000);
+      this.props.addAlert('Please enter your password', 'error', 2000);
     }
   };
 
@@ -100,7 +105,12 @@ class ModalForm extends Component {
 
     if (type) {
       modalForm = (
-        <div>
+        <form
+          onSubmit={this.onDelete}
+          className={this.props.classes.root}
+          noValidate
+          autoComplete="off"
+        >
           <h2 id="transition-modal-title">Are you sure?</h2>
           <Alert />
           <div style={{ marginTop: '30px' }}>
@@ -125,20 +135,25 @@ class ModalForm extends Component {
               Cancel
             </Button>
             <Button
+              type="submit"
               variant="contained"
               color="secondary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={this.onDelete}
             >
               Delete
             </Button>
           </div>
-        </div>
+        </form>
       );
     } else {
       modalForm = (
-        <div>
+        <form
+          onSubmit={this.onAdd}
+          className={this.props.classes.root}
+          noValidate
+          autoComplete="off"
+        >
           <h2 id="transition-modal-title">Add a new photo</h2>
           <Alert />
 
@@ -170,16 +185,16 @@ class ModalForm extends Component {
               Cancel
             </Button>
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               style={{ textTransform: 'none', borderRadius: '24px' }}
               size="large"
-              onClick={this.onSubmit}
             >
               Submit
             </Button>
           </div>
-        </div>
+        </form>
       );
     }
 
@@ -189,11 +204,7 @@ class ModalForm extends Component {
   render() {
     const modalForm = this.returnModalForm(this.props.type);
 
-    return (
-      <form className={this.props.classes.root} noValidate autoComplete="off">
-        {modalForm}
-      </form>
-    );
+    return modalForm;
   }
 }
 

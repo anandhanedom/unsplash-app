@@ -34,7 +34,7 @@ export const signUpWithCredentialAsync = (username, password) => {
 
           dispatch(addUserDetailsToStore(parsedToken.username));
         } else {
-          dispatch(addAlert('Username already taken', 'error', 3000));
+          dispatch(addAlert('Username already taken', 'error', 2000));
         }
       })
       .catch((err) => {
@@ -93,7 +93,7 @@ export const loginWithCredentialsAsync = (username, password) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          dispatch(addAlert('Wrong username or password', 'error', 3000));
+          dispatch(addAlert('Wrong username or password', 'error', 2000));
         }
       });
   };

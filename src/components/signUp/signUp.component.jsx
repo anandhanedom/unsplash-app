@@ -67,7 +67,7 @@ const SignUp = (props) => {
     if (email && password) {
       await props.signUpWithCredentialAsync(email, password);
     } else {
-      props.addAlert('Please fill in both the fields', 'error', 3000);
+      props.addAlert('Please fill in both the fields', 'error', 2000);
     }
   };
 
@@ -83,7 +83,7 @@ const SignUp = (props) => {
           variant="h5"
           style={{ marginBottom: '30px' }}
         >
-          Sign up
+          Sign Up
         </Typography>
         <Alerts />
 
