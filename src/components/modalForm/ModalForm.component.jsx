@@ -69,10 +69,12 @@ class ModalForm extends Component {
 
   onAdd = async (e) => {
     e.preventDefault();
+
     const url = document.getElementById('imageUrl');
 
-    if (this.state.label && url.files[0]) {
-      const file = url.files[0];
+    const file = url.files[0];
+
+    if (this.state.label && file) {
       let imageData = new FormData();
 
       imageData.append('label', this.state.label);

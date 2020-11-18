@@ -7,13 +7,9 @@ const INITIAL_STATE = {
 const AlertReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AlertActionTypes.SET_ALERT:
-      if (!state.alerts.length) {
-        return {
-          alerts: [...state.alerts, action.payload],
-        };
-      } else {
-        return state;
-      }
+      return {
+        alerts: [...state.alerts, action.payload],
+      };
 
     case AlertActionTypes.REMOVE_ALERT:
       return {
